@@ -24,9 +24,7 @@
       <div class="upgrade" [matTooltip]="upgrade.description">
         <mat-checkbox
           [checked]="upgrade.purchased"
-          [disabled]="
-            upgrade.purchased || upgrade.levelRequirement > pastry().level
-          "
+          [disabled]="upgrade.purchased || upgrade.levelRequirement > pastry().level || !store.hasEnoughMoney(upgrade.cost)"
           (change)="buyUpgrade(upgrade.id)"
         />
         <div class="upgrade-text">
