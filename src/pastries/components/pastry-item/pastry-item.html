@@ -17,8 +17,34 @@
     </button>
   </div>
 
+  <div class="upgrade-list">
+    @for (upgrade of pastry().upgrades; track upgrade.id) {
+      <div class="upgrade" [matTooltip]="upgrade.description">
+        <mat-checkbox
+          [checked]="upgrade.purchased"
+          [disabled]="
+            upgrade.purchased || upgrade.levelRequirement > pastry().level
+          "
+          (change)="buyUpgrade(upgrade.id)"
+        />
+        <div class="upgrade-text">
+          <p class="upgrade-name">
+            {{ upgrade.name }}
+            @if(upgrade.levelRequirement > pastry().level) {
+            <span class="upgrade-lvlReq">(Unlocks at lvl: {{ upgrade.levelRequirement }})</span>
+            }
+          </p>
+          <p class="upgrade-description">{{ upgrade.cost.toSuffixString() }}</p>
+        </div>
+      </div>
+    }
+  </div>
+
   <div class="progress-bar">
-    <div class="progress" [style.width.%]="progress()"></div>
+    <div
+      class="progress"
+      [style.width.%]="store.pastryProgress.get(pastry().id)?.()"
+    ></div>
   </div>
 
   <div class="stats">

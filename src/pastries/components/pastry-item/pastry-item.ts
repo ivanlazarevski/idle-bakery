@@ -1,36 +1,45 @@
 import { Component, inject, signal, input } from '@angular/core';
-import { Pastry } from '@pastries/data/pastry.type';
+import { Pastry, PastryUpgrade } from '@pastries/data/pastry.type';
 import { GameStore } from '@pastries/game.store';
 import { BigNum } from '@pastries/data/bignum.util';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'pastry-item',
   templateUrl: './pastry-item.html',
   styleUrls: ['./pastry-item.scss'],
+  imports: [MatCheckboxModule, MatTooltipModule],
 })
-export class ItemComponent {
+export class PastryItemComponent {
   public pastry = input.required<Pastry>();
-  private store = inject(GameStore);
+  public store = inject(GameStore);
 
   isBuilding = signal(false);
   progress = signal(0);
 
   build() {
-    if (this.isBuilding()) return;
-
+    const progressSignal = this.store.pastryProgress.get(this.pastry().id);
+    if (!progressSignal || this.isBuilding()) return;
     this.isBuilding.set(true);
-    this.progress.set(0);
+    progressSignal.set(0);
+
+
 
     const interval = 50;
-    const totalTime = this.pastry().baseBuildTime;
+    const baseTime = this.pastry().baseBuildTime;
+    const speed = this.pastry().speedMultiplier ?? 1;
+    const totalTime = baseTime / speed;
     const increment = (interval / totalTime) * 100;
 
     const timer = setInterval(() => {
-      this.progress.update((p) => p + increment);
-      if (this.progress() >= 100) {
+      progressSignal.set(progressSignal() + increment);
+      console.log(progressSignal());
+
+      if (progressSignal() >= 100) {
         clearInterval(timer);
         this.isBuilding.set(false);
-        this.progress.set(0);
+        progressSignal.set(0);
 
         const earned = this.store.getEarnings(this.pastry());
         this.store.addMoney(earned);
@@ -48,5 +57,9 @@ export class ItemComponent {
 
   get earnings(): BigNum {
     return this.store.getEarnings(this.pastry());
+  }
+
+  buyUpgrade(upgrade: number): void {
+    this.store.buyUpgrade(this.pastry().id, upgrade);
   }
 }
