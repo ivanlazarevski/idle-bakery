@@ -6,6 +6,13 @@
       <img src="/fc131.png" alt="money-icon" class="money-icon" />
       <p class="money-value">{{ money().toSuffixString() }}</p>
     </div>
-    <button (click)="clearStorage()" matButton="filled" color="primary">Reset State</button>
+    <button
+      [matTooltip]="'Clicking this will immediately delete all progress'"
+      (click)="openConfirmDialog()"
+      matButton="filled"
+      color="primary"
+    >
+      Reset State
+    </button>
   </div>
 </header>

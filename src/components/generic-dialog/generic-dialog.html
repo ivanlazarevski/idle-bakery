@@ -1,0 +1,8 @@
+<div class="dialog-container">
+  <h2>{{ data.title }}</h2>
+  <p>{{ data.message }}</p>
+  <div class="actions">
+    <button matButton="filled" (click)="dialogRef.close(false)">No</button>
+    <button matButton="filled" (click)="dialogRef.close(true)">Yes</button>
+  </div>
+</div>
