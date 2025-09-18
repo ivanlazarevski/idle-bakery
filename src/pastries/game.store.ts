@@ -310,4 +310,8 @@ export class GameStore {
       });
     }, intervalMs);
   }
+
+  hasEnoughMoney(cost: BigNum): boolean {
+    return BigNum.compare(this.money(), cost) >= 0;
+  }
 }

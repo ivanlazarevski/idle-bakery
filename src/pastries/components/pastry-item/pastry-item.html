@@ -12,7 +12,8 @@
       {{ isBuilding() ? "Baking..." : "Bake & Sell" }}
     </button>
 
-    <button (click)="levelUp()">
+    <button (click)="levelUp()"
+            [class.pulse]="pastry().level === 0 && store.hasEnoughMoney(pastry().baseCost)">
       {{pastry().level === 0 ? "Unlock" : "Level Up"}}
        ({{ nextCost.toSuffixString() }})
     </button>
