@@ -34,7 +34,6 @@ export class PastryItemComponent {
 
     const timer = setInterval(() => {
       progressSignal.set(progressSignal() + increment);
-      console.log(progressSignal());
 
       if (progressSignal() >= 100) {
         clearInterval(timer);
