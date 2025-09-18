@@ -254,6 +254,7 @@ export class GameStore {
     this.money.set(new BigNum(0, 0));
 
     this.globalSellMultiplier.set(1);
+    this.globalSpeedMultiplier.set(1);
 
     // Reset pastries
     this.pastries.update((list) =>
