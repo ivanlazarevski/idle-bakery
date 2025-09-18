@@ -1,0 +1,31 @@
+/* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fleur+De+Leah&display=swap");
+
+:root {
+  --font-regular: "Nunito Sans";
+  --font-display: "Fleur De Leah";
+
+  --cDark: #2d3436;
+  --cLight: #fff8f0;
+  --cYellow-light: #ffeaa7;
+  --cYellow-dark: #fdcb6e;
+  --cRed-light: #fab1a0;
+  --cRed-medium: #ff7675;
+  --cRed-dark: #d63031;
+  --cOrange: #e17055;
+
+  --cBrown-light: #f2d7c5;
+  --cBrown-medium: #eec2a6;
+  --cBrown-dark: #7a5c47;
+  --cbrown-darker: #5a3e2b;
+}
+
+body {
+  background-color: var(--cYellow-light);
+  font-family: var(--font-regular), serif;
+}
+
+button {
+  font-family: var(--font-regular), serif;
+}

@@ -1,0 +1,23 @@
+.title {
+  font-family: var(--font-display), cursive;
+  font-size: 3.4rem;
+  font-weight: 500;
+  color: var(--cDark);
+}
+
+.money {
+  display: flex;
+  align-items: center;
+  &-value {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--cBrown-dark);
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0rem 2rem;
+}

@@ -1,0 +1,365 @@
+import { Pastry } from "./pastry.type";
+import {BigNum} from './bignum.util';
+
+export const PASTRIES: Pastry[] = [
+  {
+    id: 1,
+    name: "Bread Loaf",
+    image: "pastries/07_bread.png",
+    rank: 1,
+    level: 1,
+    baseBuildTime: 1000,
+    updates: [],
+    baseRevenue: new BigNum(1, 0),
+    baseCost: new BigNum(4, 0),
+    costMultiplier: 1.07
+  },
+  {
+    id: 2,
+    name: "Croissant",
+    image: "pastries/croissant_icon.png",
+    rank: 2,
+    level: 0,
+    baseBuildTime: 1500,
+    updates: [],
+    baseRevenue: new BigNum(5, 0),
+    baseCost: new BigNum(20, 0),
+    costMultiplier: 1.08
+  },
+  {
+    id: 3,
+    name: "Baguette",
+    image: "pastries/09_baguette.png",
+    rank: 3,
+    level: 0,
+    baseBuildTime: 2000,
+    updates: [],
+    baseRevenue: new BigNum(15, 0),
+    baseCost: new BigNum(100, 0),
+    costMultiplier: 1.08
+  },
+  {
+    id: 4,
+    name: "Donut",
+    image: "pastries/34_donut.png",
+    rank: 4,
+    level: 0,
+    baseBuildTime: 2500,
+    updates: [],
+    baseRevenue: new BigNum(40, 0),
+    baseCost: new BigNum(500, 0),
+    costMultiplier: 1.09
+  },
+  {
+    id: 5,
+    name: "Bagel",
+    image: "pastries/20_bagel.png",
+    rank: 5,
+    level: 0,
+    baseBuildTime: 3000,
+    updates: [],
+    baseRevenue: new BigNum(100, 0),
+    baseCost: new BigNum(25, 3), // 2.5K
+    costMultiplier: 1.09
+  },
+  {
+    id: 6,
+    name: "Cheese Puff",
+    image: "pastries/24_cheesepuff.png",
+    rank: 6,
+    level: 0,
+    baseBuildTime: 3500,
+    updates: [],
+    baseRevenue: new BigNum(250, 0),
+    baseCost: new BigNum(12, 3), // 12K
+    costMultiplier: 1.10
+  },
+  {
+    id: 7,
+    name: "Scone",
+    image: "pastries/scone.png",
+    rank: 7,
+    level: 0,
+    baseBuildTime: 4000,
+    updates: [],
+    baseRevenue: new BigNum(600, 0),
+    baseCost: new BigNum(60, 3), // 60K
+    costMultiplier: 1.10
+  },
+  {
+    id: 8,
+    name: "Danish Pastry",
+    image: "pastries/12_bun_dish.png",
+    rank: 8,
+    level: 0,
+    baseBuildTime: 5000,
+    updates: [],
+    baseRevenue: new BigNum(1500, 0),
+    baseCost: new BigNum(300, 3), // 300K
+    costMultiplier: 1.11
+  },
+  {
+    id: 9,
+    name: "Eclair",
+    image: "pastries/eclair.png",
+    rank: 9,
+    level: 0,
+    baseBuildTime: 6000,
+    updates: [],
+    baseRevenue: new BigNum(3500, 0),
+    baseCost: new BigNum(15, 6), // 1.5M
+    costMultiplier: 1.11
+  },
+  {
+    id: 10,
+    name: "Cinnamon Roll",
+    image: "pastries/cinnamon_roll_icon.png",
+    rank: 10,
+    level: 0,
+    baseBuildTime: 7000,
+    updates: [],
+    baseRevenue: new BigNum(8000, 0),
+    baseCost: new BigNum(75, 6), // 7.5M
+    costMultiplier: 1.12
+  },
+  {
+    id: 11,
+    name: "Tart",
+    image: "pastries/42_eggtart.png",
+    rank: 11,
+    level: 0,
+    baseBuildTime: 8000,
+    updates: [],
+    baseRevenue: new BigNum(20000, 0),
+    baseCost: new BigNum(40, 6), // 40M
+    costMultiplier: 1.12
+  },
+  {
+    id: 12,
+    name: "Cheesecake Slice",
+    image: "pastries/22_cheesecake.png",
+    rank: 12,
+    level: 0,
+    baseBuildTime: 9000,
+    updates: [],
+    baseRevenue: new BigNum(50000, 0),
+    baseCost: new BigNum(200, 6), // 200M
+    costMultiplier: 1.13
+  },
+  {
+    id: 13,
+    name: "Apple Pie",
+    image: "pastries/06_apple_pie_dish.png",
+    rank: 13,
+    level: 0,
+    baseBuildTime: 10000,
+    updates: [],
+    baseRevenue: new BigNum(120000, 0),
+    baseCost: new BigNum(1, 9), // 1B
+    costMultiplier: 1.13
+  },
+  {
+    id: 14,
+    name: "Chocolate Cake",
+    image: "pastries/31_chocolatecake_dish.png",
+    rank: 14,
+    level: 0,
+    baseBuildTime: 12000,
+    updates: [],
+    baseRevenue: new BigNum(300000, 0),
+    baseCost: new BigNum(5, 9), // 5B
+    costMultiplier: 1.14
+  },
+  {
+    id: 15,
+    name: "Dumplings",
+    image: "pastries/37_dumplings_dish.png",
+    rank: 15,
+    level: 0,
+    baseBuildTime: 14000,
+    updates: [],
+    baseRevenue: new BigNum(750000, 0),
+    baseCost: new BigNum(25, 9), // 25B
+    costMultiplier: 1.14
+  },
+  {
+    id: 16,
+    name: "Garlic Bread",
+    image: "pastries/48_garlicbread.png",
+    rank: 16,
+    level: 0,
+    baseBuildTime: 16000,
+    updates: [],
+    baseRevenue: new BigNum(2, 6), // 2M
+    baseCost: new BigNum(120, 9), // 120B
+    costMultiplier: 1.15
+  },
+  {
+    id: 17,
+    name: "Lemon Pie",
+    image: "pastries/64_lemonpie_dish.png",
+    rank: 17,
+    level: 0,
+    baseBuildTime: 18000,
+    updates: [],
+    baseRevenue: new BigNum(5, 6), // 5M
+    baseCost: new BigNum(600, 9), // 600B
+    costMultiplier: 1.15
+  },
+  {
+    id: 18,
+    name: "Fruit Cake",
+    image: "pastries/47_fruitcake_dish.png",
+    rank: 18,
+    level: 0,
+    baseBuildTime: 20000,
+    updates: [],
+    baseRevenue: new BigNum(12, 6), // 12M
+    baseCost: new BigNum(3, 12), // 3T
+    costMultiplier: 1.16
+  },
+  {
+    id: 19,
+    name: "Pancakes",
+    image: "pastries/80_pancakes_dish.png",
+    rank: 19,
+    level: 0,
+    baseBuildTime: 22000,
+    updates: [],
+    baseRevenue: new BigNum(30, 6), // 30M
+    baseCost: new BigNum(15, 12), // 15T
+    costMultiplier: 1.16
+  },
+  {
+    id: 20,
+    name: "Strawberry Cake",
+    image: "pastries/91_strawberrycake_dish.png",
+    rank: 20,
+    level: 0,
+    baseBuildTime: 25000,
+    updates: [],
+    baseRevenue: new BigNum(75, 6), // 75M
+    baseCost: new BigNum(75, 12), // 75T
+    costMultiplier: 1.17
+  },
+  {
+    id: 21,
+    name: "Gingerbread Man",
+    image: "pastries/52_gingerbreadman.png",
+    rank: 21,
+    level: 0,
+    baseBuildTime: 28000,
+    updates: [],
+    baseRevenue: new BigNum(200, 6), // 200M
+    baseCost: new BigNum(400, 12), // 400T
+    costMultiplier: 1.17
+  },
+  {
+    id: 22,
+    name: "Ice Cream",
+    image: "pastries/58_icecream_bowl.png",
+    rank: 22,
+    level: 0,
+    baseBuildTime: 30000,
+    updates: [],
+    baseRevenue: new BigNum(500, 6), // 500M
+    baseCost: new BigNum(2, 15), // 2Qa
+    costMultiplier: 1.18
+  },
+  {
+    id: 23,
+    name: "Jelly",
+    image: "pastries/60_jelly_dish.png",
+    rank: 23,
+    level: 0,
+    baseBuildTime: 35000,
+    updates: [],
+    baseRevenue: new BigNum(1.2, 9), // 1.2B
+    baseCost: new BigNum(10, 15), // 10Qa
+    costMultiplier: 1.18
+  },
+  {
+    id: 24,
+    name: "Pudding",
+    image: "pastries/76_pudding_dish.png",
+    rank: 24,
+    level: 0,
+    baseBuildTime: 40000,
+    updates: [],
+    baseRevenue: new BigNum(3, 9), // 3B
+    baseCost: new BigNum(50, 15), // 50Qa
+    costMultiplier: 1.19
+  },
+  {
+    id: 25,
+    name: "Galette",
+    image: "pastries/galette_cake.png",
+    rank: 25,
+    level: 0,
+    baseBuildTime: 45000,
+    updates: [],
+    baseRevenue: new BigNum(7.5, 9), // 7.5B
+    baseCost: new BigNum(250, 15), // 250Qa
+    costMultiplier: 1.19
+  },
+  {
+    id: 26,
+    name: "Pizza",
+    image: "pastries/82_pizza_dish.png",
+    rank: 26,
+    level: 0,
+    baseBuildTime: 50000,
+    updates: [],
+    baseRevenue: new BigNum(20, 9), // 20B
+    baseCost: new BigNum(1, 18), // 1Qi
+    costMultiplier: 1.20
+  },
+  {
+    id: 27,
+    name: "Black Forest Cake",
+    image: "pastries/black_forest_cake.png",
+    rank: 27,
+    level: 0,
+    baseBuildTime: 60000,
+    updates: [],
+    baseRevenue: new BigNum(50, 9), // 50B
+    baseCost: new BigNum(5, 18), // 5Qi
+    costMultiplier: 1.20
+  },
+  {
+    id: 28,
+    name: "Pavlova Cake",
+    image: "pastries/pavlova.png",
+    rank: 28,
+    level: 0,
+    baseBuildTime: 70000,
+    updates: [],
+    baseRevenue: new BigNum(120, 9), // 120B
+    baseCost: new BigNum(25, 18), // 25Qi
+    costMultiplier: 1.21
+  },
+  {
+    id: 29,
+    name: "Croquembouche",
+    image: "pastries/croquembouche.png",
+    rank: 29,
+    level: 0,
+    baseBuildTime: 80000,
+    updates: [],
+    baseRevenue: new BigNum(300, 9), // 300B
+    baseCost: new BigNum(120, 18), // 120Qi
+    costMultiplier: 1.21
+  },
+  {
+    id: 30,
+    name: "Wedding Cake",
+    image: "pastries/wedding_cake.png",
+    rank: 30,
+    level: 0,
+    baseBuildTime: 90000,
+    updates: [],
+    baseRevenue: new BigNum(1, 12), // 1T
+    baseCost: new BigNum(600, 18), // 600Qi
+    costMultiplier: 1.22
+  }
+];

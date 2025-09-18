@@ -1,0 +1,29 @@
+<div class="item-card">
+  <div class="item-header">
+    <img [src]="pastry().image" [alt]="pastry().name" class="item-image" />
+    <div class="item-info">
+      <h3>{{ pastry().name }}</h3>
+      <p class="level">Level: {{ pastry().level }}</p>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button (click)="build()" [disabled]="isBuilding() || pastry().level === 0">
+      {{ isBuilding() ? "Baking..." : "Bake & Sell" }}
+    </button>
+
+    <button (click)="levelUp()">
+      Upgrade ({{ nextCost.toSuffixString() }})
+    </button>
+  </div>
+
+  <div class="progress-bar">
+    <div class="progress" [style.width.%]="progress()"></div>
+  </div>
+
+  <div class="stats">
+    <p>
+      Earns: <strong>{{ earnings.toSuffixString() }}</strong> per sale
+    </p>
+  </div>
+</div>

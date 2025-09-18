@@ -1,0 +1,9 @@
+<div class="item-grid">
+  @for (item of pastryList(); track item.id) {
+    <div class="item-wrapper"
+         [class.item-disabled] = "item.level === 0"
+    >
+      <pastry-item [pastry]="item" />
+    </div>
+  }
+</div>
