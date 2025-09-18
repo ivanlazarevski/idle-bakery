@@ -13,7 +13,8 @@
     </button>
 
     <button (click)="levelUp()">
-      Upgrade ({{ nextCost.toSuffixString() }})
+      {{pastry().level === 0 ? "Unlock" : "Level Up"}}
+       ({{ nextCost.toSuffixString() }})
     </button>
   </div>
 

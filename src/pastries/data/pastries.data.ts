@@ -1,6 +1,11 @@
 import { Pastry } from './pastry.type';
 import { BigNum } from './bignum.util';
-import { BREAD_UPGRADES } from '@pastries/data/pastry-upgrades.type';
+import {
+  BAGUETTE_UPGRADES,
+  BREAD_UPGRADES,
+  CROISSANT_UPGRADES,
+  DONUT_UPGRADES
+} from '@pastries/data/pastry-upgrades.data';
 
 export const PASTRIES: Pastry[] = [
   {
@@ -25,7 +30,7 @@ export const PASTRIES: Pastry[] = [
     rank: 2,
     level: 0,
     baseBuildTime: 1500,
-    upgrades: [],
+    upgrades: CROISSANT_UPGRADES,
     baseRevenue: new BigNum(5, 0),
     baseCost: new BigNum(20, 0),
     costMultiplier: 1.08,
@@ -40,7 +45,7 @@ export const PASTRIES: Pastry[] = [
     rank: 3,
     level: 0,
     baseBuildTime: 2000,
-    upgrades: [],
+    upgrades: BAGUETTE_UPGRADES,
     baseRevenue: new BigNum(15, 0),
     baseCost: new BigNum(100, 0),
     costMultiplier: 1.08,
@@ -55,7 +60,7 @@ export const PASTRIES: Pastry[] = [
     rank: 4,
     level: 0,
     baseBuildTime: 2500,
-    upgrades: [],
+    upgrades: DONUT_UPGRADES,
     baseRevenue: new BigNum(40, 0),
     baseCost: new BigNum(500, 0),
     costMultiplier: 1.09,

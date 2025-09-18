@@ -1,4 +1,4 @@
-import { Injectable, signal, effect, Signal, WritableSignal } from '@angular/core';
+import { effect, Injectable, signal, WritableSignal } from '@angular/core';
 import { BigNum } from '@pastries/data/bignum.util';
 import {
   Pastry,
@@ -15,6 +15,8 @@ const SAVE_KEY = 'bakery_save_v1';
 export class GameStore {
   money = signal(new BigNum(0, 0));
   pastries = signal<Pastry[]>([]);
+  globalSellMultiplier = signal(1);
+  globalSpeedMultiplier = signal(1);
 
   private automationInterval: any = null;
   pastryProgress = new Map<number, WritableSignal<number>>();
@@ -79,7 +81,7 @@ export class GameStore {
         // check if already purchased or level requirement not met
         if (upgrade.purchased || p.level < upgrade.levelRequirement) return p;
 
-        // check if player can afford it
+        // check if the player can afford it
         if (!this.spendMoney(upgrade.cost)) return p;
 
         // mark upgrade as purchased
@@ -129,7 +131,7 @@ export class GameStore {
   // price = baseCost * costMultiplier^level
   getNextCost(p: Pastry): BigNum {
     // compute multiplier^level as a JS number (may lose precision at extreme levels,
-    // but you are capped by Vigintillion, so it's acceptable for now)
+    // but it is capped by Vigintillion, so it's acceptable for now)
     const multiplierPow = Math.pow(p.costMultiplier, p.level);
     return BigNum.multiply(p.baseCost, new BigNum(multiplierPow, 0));
   }
@@ -137,15 +139,17 @@ export class GameStore {
   getEarnings(p: Pastry): BigNum {
     if (p.level === 0) return new BigNum(0, 0);
 
-    // base revenue * level
-    let earnings = BigNum.multiply(p.baseRevenue, new BigNum(p.level, 0));
+    // base revenue * pastry sellMultiplier * globalSellMultiplier * level
+    const base = BigNum.multiply(p.baseRevenue, new BigNum(p.level, 0));
+    const withPastryMultiplier = BigNum.multiply(
+      base,
+      new BigNum(p.sellMultiplier ?? 1, 0),
+    );
 
-    // apply sell multiplier (default 1)
-    if (p.sellMultiplier && p.sellMultiplier !== 1) {
-      earnings = BigNum.multiply(earnings, new BigNum(p.sellMultiplier, 0));
-    }
-
-    return earnings;
+    return BigNum.multiply(
+      withPastryMultiplier,
+      new BigNum(this.globalSellMultiplier(), 0),
+    );
   }
 
   // ---------- persistence ----------
@@ -153,6 +157,8 @@ export class GameStore {
     try {
       const payload = {
         money: this.money().toObject(),
+        globalSellMultiplier: this.globalSellMultiplier(),
+        globalSpeedMultiplier: this.globalSpeedMultiplier(),
         pastries: this.pastries().map((p) => ({
           id: p.id,
           level: p.level,
@@ -178,6 +184,16 @@ export class GameStore {
       // restore money
       if (parsed?.money) {
         this.money.set(BigNum.fromObject(parsed.money));
+      }
+
+      // Restore Global Sell Multiplier
+      if (parsed?.globalSellMultiplier != null) {
+        this.globalSellMultiplier.set(parsed.globalSellMultiplier);
+      }
+
+      // Restore Global Speed Multiplier
+      if (parsed?.globalSpeedMultiplier != null) {
+        this.globalSpeedMultiplier.set(parsed.globalSpeedMultiplier);
       }
 
       // restore pastries
@@ -208,7 +224,7 @@ export class GameStore {
             let merged: Pastry = {
               ...p,
               level: saved.level ?? p.level,
-              sellMultiplier: 1, // reset to defaults, will be re-applied by upgrades
+              sellMultiplier: 1, // upgrades will re-apply reset to defaults
               speedMultiplier: 1,
               automation: false,
               upgrades: mergedUpgrades,
@@ -237,11 +253,16 @@ export class GameStore {
     // Reset money
     this.money.set(new BigNum(0, 0));
 
+    this.globalSellMultiplier.set(1);
+
     // Reset pastries
     this.pastries.update((list) =>
       list.map((p) => {
         // reset upgrades
-        const resetUpgrades = p.upgrades.map((u) => ({ ...u, purchased: false }));
+        const resetUpgrades = p.upgrades.map((u) => ({
+          ...u,
+          purchased: false,
+        }));
 
         // reset core properties
         const resetPastry: Pastry = {
@@ -275,7 +296,7 @@ export class GameStore {
         if (!progressSignal) return;
 
         const speed = p.speedMultiplier ?? 1;
-        const increment = (intervalMs / (p.baseBuildTime / speed)) * 100;
+        const increment = (intervalMs / (p.baseBuildTime / ((p.speedMultiplier ?? 1) * this.globalSpeedMultiplier()))) * 100;
 
         let newProgress = progressSignal() + increment;
         if (newProgress >= 100) {

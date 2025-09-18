@@ -14,9 +14,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 export class PastryItemComponent {
   public pastry = input.required<Pastry>();
   public store = inject(GameStore);
+  public progress = this.store.pastryProgress;
 
   isBuilding = signal(false);
-  progress = signal(0);
 
   build() {
     const progressSignal = this.store.pastryProgress.get(this.pastry().id);

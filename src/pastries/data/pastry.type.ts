@@ -20,6 +20,8 @@ export enum PastryUpgradeType {
   SellMultiplier = 'sellMultiplier',
   SpeedMultiplier = 'speedMultiplier',
   Automation = 'automation',
+  GlobalSellMultiplier = 'globalSellMultiplier',
+  GlobalSpeedMultiplier = 'globalSpeedMultiplier',
 }
 
 export type PastryUpgrade = {
