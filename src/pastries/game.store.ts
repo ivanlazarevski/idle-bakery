@@ -1,4 +1,10 @@
-import { effect, Injectable, signal, WritableSignal } from '@angular/core';
+import {
+  computed,
+  effect,
+  Injectable,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { BigNum } from '@pastries/data/bignum.util';
 import {
   Pastry,
@@ -15,6 +21,12 @@ const SAVE_KEY = 'bakery_save_v1';
 export class GameStore {
   money = signal(new BigNum(0, 0));
   pastries = signal<Pastry[]>([]);
+
+  totalPastryLevels = computed(() =>
+    this.pastries().reduce((sum, p) => sum + p.level, 0),
+  );
+
+  lifeLessons = signal(0);
   globalSellMultiplier = signal(1);
   globalSpeedMultiplier = signal(1);
 
@@ -56,7 +68,7 @@ export class GameStore {
     this.startAutomationLoop();
   }
 
-  addMoney(amount: BigNum) {
+  addMoney(amount: BigNum): void {
     this.money.update((m) => BigNum.add(m, amount));
   }
 
@@ -69,7 +81,7 @@ export class GameStore {
     return false;
   }
 
-  buyUpgrade(pastryId: number, upgradeId: number) {
+  buyUpgrade(pastryId: number, upgradeId: number): void {
     this.pastries.update((list) =>
       list.map((p) => {
         if (p.id !== pastryId) return p;
@@ -111,17 +123,21 @@ export class GameStore {
         updated.automation = true;
         break;
       case PastryUpgradeType.GlobalSellMultiplier:
-        this.globalSellMultiplier.set(this.globalSellMultiplier() * upgrade.value);
+        this.globalSellMultiplier.set(
+          this.globalSellMultiplier() * upgrade.value,
+        );
         break;
       case PastryUpgradeType.GlobalSpeedMultiplier:
-        this.globalSpeedMultiplier.set(this.globalSpeedMultiplier() * upgrade.value);
+        this.globalSpeedMultiplier.set(
+          this.globalSpeedMultiplier() * upgrade.value,
+        );
         break;
     }
     return updated;
   }
 
   // level up pastry if player can afford next cost
-  levelUp(pastryId: number) {
+  levelUp(pastryId: number): void {
     this.pastries.update((list) =>
       list.map((p) => {
         if (p.id !== pastryId) return p;
@@ -147,24 +163,35 @@ export class GameStore {
       return new BigNum(0, 0);
     }
 
-    // base revenue * pastry sellMultiplier * globalSellMultiplier * level
+    // base revenue * level
     const base = BigNum.multiply(p.baseRevenue, new BigNum(p.level, 0));
+
+    // apply pastry-specific multiplier
     const withPastryMultiplier = BigNum.multiply(
       base,
       new BigNum(p.sellMultiplier ?? 1, 0),
     );
 
-    return BigNum.multiply(
+    // apply global sell multiplier
+    const withGlobalMultiplier = BigNum.multiply(
       withPastryMultiplier,
       new BigNum(this.globalSellMultiplier(), 0),
+    );
+
+    // apply prestige multiplier: +1% per life lesson
+    const prestigeMultiplier = 1 + this.lifeLessons() * 0.01;
+    return BigNum.multiply(
+      withGlobalMultiplier,
+      new BigNum(prestigeMultiplier, 0),
     );
   }
 
   // ---------- persistence ----------
-  private saveState() {
+  private saveState(): void {
     try {
       const payload = {
         money: this.money().toObject(),
+        lifeLessons: this.lifeLessons(),
         globalSellMultiplier: this.globalSellMultiplier(),
         globalSpeedMultiplier: this.globalSpeedMultiplier(),
         pastries: this.pastries().map((p) => ({
@@ -182,7 +209,7 @@ export class GameStore {
     }
   }
 
-  private loadState() {
+  private loadState(): void {
     try {
       const raw = localStorage.getItem(SAVE_KEY);
       if (!raw) return;
@@ -202,6 +229,11 @@ export class GameStore {
       // Restore Global Speed Multiplier
       if (parsed?.globalSpeedMultiplier != null) {
         this.globalSpeedMultiplier.set(parsed.globalSpeedMultiplier);
+      }
+
+      // restore lifeLessons
+      if (parsed?.lifeLessons != null && !isNaN(Number(parsed.lifeLessons))) {
+        this.lifeLessons.set(Math.floor(Number(parsed.lifeLessons)));
       }
 
       // restore pastries
@@ -254,12 +286,13 @@ export class GameStore {
     }
   }
 
-  clearSave() {
+  clearSave(): void {
     // Remove saved data
     localStorage.removeItem(SAVE_KEY);
 
     // Reset money
     this.money.set(new BigNum(0, 0));
+    this.updateLifeLessons();
 
     this.globalSellMultiplier.set(1);
     this.globalSpeedMultiplier.set(1);
@@ -294,7 +327,13 @@ export class GameStore {
     window.location.reload();
   }
 
-  startAutomationLoop(intervalMs = 50) {
+  private updateLifeLessons(): void {
+    // Earn 1 life lesson per 100 levels
+    const earnedLessons = Math.floor(this.totalPastryLevels() / 100);
+    this.lifeLessons.update((prev) => prev + earnedLessons);
+  }
+
+  startAutomationLoop(intervalMs = 50): void {
     if (this.automationInterval) return;
 
     this.automationInterval = setInterval(() => {
@@ -305,7 +344,11 @@ export class GameStore {
         if (!progressSignal) return;
 
         const speed = p.speedMultiplier ?? 1;
-        const increment = (intervalMs / (p.baseBuildTime / ((p.speedMultiplier ?? 1) * this.globalSpeedMultiplier()))) * 100;
+        const increment =
+          (intervalMs /
+            (p.baseBuildTime /
+              ((p.speedMultiplier ?? 1) * this.globalSpeedMultiplier()))) *
+          100;
 
         let newProgress = progressSignal() + increment;
         if (newProgress >= 100) {

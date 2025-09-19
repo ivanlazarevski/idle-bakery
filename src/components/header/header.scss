@@ -8,6 +8,7 @@
 .money {
   display: flex;
   align-items: center;
+  padding: 0 1rem;
   &-value {
     font-size: 2rem;
     font-weight: bold;
@@ -19,16 +20,34 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0rem 2rem;
+  padding: 0 2rem;
 }
 
-.right-panel {
+.right-panel,
+.left-panel
+{
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
+.left-panel {
+  gap: 2rem;
+}
+
 .actions {
   display: flex;
   gap: 1rem;
+}
+
+.ascension {
+  &-value {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--cBrown-dark);
+  }
+
+  &-potential {
+    color: var(--cDark);
+  }
 }

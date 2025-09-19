@@ -1,13 +1,32 @@
 <header class="header">
-  <div class="title">Idle Bakery</div>
-
+  <div class="left-panel">
+    <div class="title">Idle Bakery</div>
+    <div class="ascension" matBadge="new!" matBadgePosition="after">
+      <p
+        class="ascension-value"
+        matTooltip="Each life lesson increases the global sell value by +1%"
+      >
+        +{{ lifeLessons() }} Life Lessons
+      </p>
+      <p class="ascension-potential">
+        Your oldest child will gain {{ potentialLifeLessons() }} life lessons if
+        you retire now.
+      </p>
+    </div>
+  </div>
   <div class="right-panel">
     <div class="money">
       <img src="/fc131.png" alt="money-icon" class="money-icon" />
       <p class="money-value">{{ money().toSuffixString() }}</p>
     </div>
     <div class="actions">
-      <button matButton="elevated" color="accent" (click)="toggleMusic()" matBadge="new!" matBadgePosition="after">
+      <button
+        matButton="elevated"
+        color="accent"
+        (click)="toggleMusic()"
+        matBadge="new!"
+        matBadgePosition="after"
+      >
         @if (musicPlaying()) {
           <mat-icon>music_note</mat-icon>
         } @else {
@@ -16,12 +35,14 @@
         Toggle Music
       </button>
       <button
-        [matTooltip]="'Clicking this will immediately delete all progress! DEBUG ONLY!'"
+        [matTooltip]="
+          'Clicking this will immediately delete all progress! You will gain a number of life lessons based on your total pastry level.'
+        "
         (click)="openConfirmDialog()"
         matButton="filled"
         color="primary"
       >
-        Reset State
+        Retire Now
       </button>
     </div>
   </div>

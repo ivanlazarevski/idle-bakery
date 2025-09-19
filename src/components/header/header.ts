@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { GameStore } from '@pastries/game.store';
 import { MatButtonModule } from '@angular/material/button';
 import { GenericDialog } from '@components/generic-dialog/generic-dialog';
@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MusicService } from '../../music/music';
 import { MatIconModule } from '@angular/material/icon';
-import {MatBadgeModule} from '@angular/material/badge';
+import { MatBadgeModule } from '@angular/material/badge';
 
 @Component({
   selector: 'app-header',
@@ -21,6 +21,11 @@ export class Header {
   public money = this.store.money;
   readonly dialog = inject(MatDialog);
   public musicPlaying = this.musicService.musicEnabled;
+  public totalPastryLevels = this.store.totalPastryLevels;
+  public lifeLessons = this.store.lifeLessons;
+  public potentialLifeLessons = computed(() => {
+    return Math.floor(this.totalPastryLevels() / 100);
+  });
 
   clearStorage() {
     this.store.clearSave();
@@ -35,7 +40,7 @@ export class Header {
       },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.clearStorage();
         alert('Save data cleared.');
