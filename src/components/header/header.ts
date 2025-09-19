@@ -4,17 +4,23 @@ import { MatButtonModule } from '@angular/material/button';
 import { GenericDialog } from '@components/generic-dialog/generic-dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MusicService } from '../../music/music';
+import { MatIconModule } from '@angular/material/icon';
+import {MatBadgeModule} from '@angular/material/badge';
 
 @Component({
   selector: 'app-header',
-  imports: [MatButtonModule, MatTooltipModule],
+  imports: [MatButtonModule, MatTooltipModule, MatIconModule, MatBadgeModule],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
 export class Header {
   public store = inject(GameStore);
+  public musicService = inject(MusicService);
+
   public money = this.store.money;
   readonly dialog = inject(MatDialog);
+  public musicPlaying = this.musicService.musicEnabled;
 
   clearStorage() {
     this.store.clearSave();
@@ -35,5 +41,9 @@ export class Header {
         alert('Save data cleared.');
       }
     });
+  }
+
+  public toggleMusic(): void {
+    this.musicService.toggleMusic();
   }
 }

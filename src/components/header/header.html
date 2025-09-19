@@ -6,13 +6,23 @@
       <img src="/fc131.png" alt="money-icon" class="money-icon" />
       <p class="money-value">{{ money().toSuffixString() }}</p>
     </div>
-    <button
-      [matTooltip]="'Clicking this will immediately delete all progress'"
-      (click)="openConfirmDialog()"
-      matButton="filled"
-      color="primary"
-    >
-      Reset State
-    </button>
+    <div class="actions">
+      <button matButton="elevated" color="accent" (click)="toggleMusic()" matBadge="new!" matBadgePosition="after">
+        @if (musicPlaying()) {
+          <mat-icon>music_note</mat-icon>
+        } @else {
+          <mat-icon>music_off</mat-icon>
+        }
+        Toggle Music
+      </button>
+      <button
+        [matTooltip]="'Clicking this will immediately delete all progress! DEBUG ONLY!'"
+        (click)="openConfirmDialog()"
+        matButton="filled"
+        color="primary"
+      >
+        Reset State
+      </button>
+    </div>
   </div>
 </header>
