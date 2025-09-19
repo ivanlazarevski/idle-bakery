@@ -110,6 +110,12 @@ export class GameStore {
       case PastryUpgradeType.Automation:
         updated.automation = true;
         break;
+      case PastryUpgradeType.GlobalSellMultiplier:
+        this.globalSellMultiplier.set(this.globalSellMultiplier() * upgrade.value);
+        break;
+      case PastryUpgradeType.GlobalSpeedMultiplier:
+        this.globalSpeedMultiplier.set(this.globalSpeedMultiplier() * upgrade.value);
+        break;
     }
     return updated;
   }
@@ -137,7 +143,9 @@ export class GameStore {
   }
 
   getEarnings(p: Pastry): BigNum {
-    if (p.level === 0) return new BigNum(0, 0);
+    if (p.level === 0) {
+      return new BigNum(0, 0);
+    }
 
     // base revenue * pastry sellMultiplier * globalSellMultiplier * level
     const base = BigNum.multiply(p.baseRevenue, new BigNum(p.level, 0));
