@@ -1,11 +1,5 @@
 .item {
-  &-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    padding: 0 2rem;
-  }
   &-disabled {
-    opacity: 0.50;
+    opacity: 0.5;
   }
 }
-

@@ -17,10 +17,14 @@
 }
 
 .header {
+  background: var(--cYellow-light);
+  border-bottom: 1px solid var(--cRed-light);
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 2rem;
+  z-index: 10;
 }
 
 .right-panel,
