@@ -280,7 +280,12 @@ export class GameStore {
             // re-apply purchased upgrades to restore multipliers/automation
             for (const u of mergedUpgrades) {
               if (u.purchased) {
-                merged = this.applyUpgrade(merged, u);
+                if (
+                  u.type !== PastryUpgradeType.GlobalSellMultiplier &&
+                  u.type !== PastryUpgradeType.GlobalSpeedMultiplier
+                ) {
+                  merged = this.applyUpgrade(merged, u);
+                }
               }
             }
 
