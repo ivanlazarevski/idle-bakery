@@ -1,5 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { TRACKS } from './music.tracks';
+import { Sfx } from './sfx.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -8,8 +9,47 @@ export class MusicService {
   private tracks = TRACKS;
   private audio: HTMLAudioElement | null = null;
   private lastTrackIndex: number | null = null;
+  public buildAudio = '/Audio/Build.wav';
+  public upgradeAudio = '/Audio/Upgrade.wav';
+  public unlockAudio = '/Audio/Unlock.wav';
+  private sfxAudio: HTMLAudioElement | null = null;
 
   musicEnabled = signal(false);
+  sfxEnabled = signal(false);
+
+  public toggleSfx(state: boolean): void {
+    if (state) {
+      this.sfxAudio = new Audio();
+      this.sfxAudio.volume = 0.5;
+    } else {
+      this.sfxAudio = null;
+    }
+
+    this.sfxEnabled.set(state);
+  }
+
+  public playSfxSound(type: Sfx): void {
+    if (!this.sfxEnabled()) {
+      return;
+    }
+
+    if (this.sfxAudio) {
+      switch (type) {
+        case Sfx.BUILD:
+          this.sfxAudio.src = this.buildAudio;
+          this.sfxAudio.play();
+          break;
+        case Sfx.UPGRADE:
+          this.sfxAudio.src = this.upgradeAudio;
+          this.sfxAudio.play();
+          break;
+        case Sfx.UNLOCK:
+          this.sfxAudio.src = this.unlockAudio;
+          this.sfxAudio.play();
+          break;
+      }
+    }
+  }
 
   private getRandomTrack(): string {
     if (this.tracks.length <= 1) return this.tracks[0];

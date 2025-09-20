@@ -8,7 +8,7 @@
   </div>
 
   <div class="actions">
-    <button (click)="build()" [disabled]="isBuilding() || pastry().level === 0">
+    <button (click)="build('click')" [disabled]="isBuilding() || pastry().level === 0">
       {{ isBuilding() ? "Baking..." : "Bake & Sell" }}
     </button>
     <button (click)="levelUp()"

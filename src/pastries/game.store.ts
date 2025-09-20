@@ -1,9 +1,9 @@
 import {
   computed,
-  effect,
+  effect, inject,
   Injectable,
   signal,
-  WritableSignal,
+  WritableSignal
 } from '@angular/core';
 import { BigNum } from '@pastries/data/bignum.util';
 import {
@@ -12,6 +12,8 @@ import {
   PastryUpgradeType,
 } from '@pastries/data/pastry.type';
 import { PASTRIES } from '@pastries/data/pastries.data';
+import { MusicService } from '../music/music';
+import { Sfx } from '../music/sfx.enum';
 
 const SAVE_KEY = 'bakery_save_v1';
 
@@ -19,6 +21,8 @@ const SAVE_KEY = 'bakery_save_v1';
   providedIn: 'root',
 })
 export class GameStore {
+  private musicService = inject(MusicService);
+
   money = signal(new BigNum(0, 0));
   pastries = signal<Pastry[]>([]);
 
@@ -104,7 +108,6 @@ export class GameStore {
         // apply upgrade effect
         let updated = { ...p, upgrades: newUpgrades };
         updated = this.applyUpgrade(updated, upgrade);
-
         return updated;
       }),
     );
@@ -133,6 +136,8 @@ export class GameStore {
         );
         break;
     }
+
+    this.musicService.playSfxSound(Sfx.UPGRADE);
     return updated;
   }
 
@@ -144,7 +149,9 @@ export class GameStore {
 
         const cost = this.getNextCost(p);
         if (!this.spendMoney(cost)) return p; // can't afford
-
+        if(p.level === 0) {
+          this.musicService.playSfxSound(Sfx.UNLOCK);
+        }
         return { ...p, level: p.level + 1 };
       }),
     );

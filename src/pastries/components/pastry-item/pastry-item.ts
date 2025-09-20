@@ -1,10 +1,12 @@
-import { Component, inject, signal, input } from '@angular/core';
+import { Component, inject, input, signal } from '@angular/core';
 import { Pastry } from '@pastries/data/pastry.type';
 import { GameStore } from '@pastries/game.store';
 import { BigNum } from '@pastries/data/bignum.util';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import {MatBadgeModule} from '@angular/material/badge';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MusicService } from '../../../music/music';
+import { Sfx } from '../../../music/sfx.enum';
 
 @Component({
   selector: 'pastry-item',
@@ -14,17 +16,16 @@ import {MatBadgeModule} from '@angular/material/badge';
 })
 export class PastryItemComponent {
   public pastry = input.required<Pastry>();
+  public musicService = inject(MusicService);
   public store = inject(GameStore);
 
   isBuilding = signal(false);
 
-  build() {
+  build(source: string = 'base') {
     const progressSignal = this.store.pastryProgress.get(this.pastry().id);
     if (!progressSignal || this.isBuilding()) return;
     this.isBuilding.set(true);
     progressSignal.set(0);
-
-
 
     const interval = 50;
     const baseTime = this.pastry().baseBuildTime;
@@ -36,6 +37,10 @@ export class PastryItemComponent {
       progressSignal.set(progressSignal() + increment);
 
       if (progressSignal() >= 100) {
+        if (source === 'click') {
+          this.musicService.playSfxSound(Sfx.BUILD);
+        }
+
         clearInterval(timer);
         this.isBuilding.set(false);
         progressSignal.set(0);

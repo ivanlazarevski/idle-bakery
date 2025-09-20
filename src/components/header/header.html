@@ -19,6 +19,17 @@
       <img src="/fc131.png" alt="money-icon" class="money-icon" />
       <p class="money-value">{{ money().toSuffixString() }}</p>
     </div>
+
+    @if(sfxEnabled()) {
+      <button matMiniFab (click)="toggleAudio(false)" matTooltip="Toggle SFX!">
+        <mat-icon>volume_up</mat-icon>
+      </button>
+    } @else {
+      <button matMiniFab (click)="toggleAudio(true)" matTooltip="Toggle SFX!">
+        <mat-icon>volume_off</mat-icon>
+      </button>
+    }
+
     <div class="actions">
       <button
         matButton="elevated"

@@ -23,6 +23,7 @@ export class Header {
   public musicPlaying = this.musicService.musicEnabled;
   public totalPastryLevels = this.store.totalPastryLevels;
   public lifeLessons = this.store.lifeLessons;
+  public sfxEnabled = this.musicService.sfxEnabled;
   public potentialLifeLessons = computed(() => {
     return Math.floor(this.totalPastryLevels() / 100);
   });
@@ -50,5 +51,9 @@ export class Header {
 
   public toggleMusic(): void {
     this.musicService.toggleMusic();
+  }
+
+  toggleAudio(state: boolean) {
+    this.musicService.toggleSfx(state);
   }
 }
