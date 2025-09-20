@@ -1,8 +1,9 @@
 import { Pastry } from './pastry.type';
 import { BigNum } from './bignum.util';
 import {
+  BAGEL_UPGRADES,
   BAGUETTE_UPGRADES,
-  BREAD_UPGRADES,
+  BREAD_UPGRADES, CHEESE_PUFF_UPGRADES,
   CROISSANT_UPGRADES,
   DONUT_UPGRADES
 } from '@pastries/data/pastry-upgrades.data';
@@ -32,7 +33,7 @@ export const PASTRIES: Pastry[] = [
     baseBuildTime: 1500,
     upgrades: CROISSANT_UPGRADES,
     baseRevenue: new BigNum(5, 0),
-    baseCost: new BigNum(20, 0),
+    baseCost: new BigNum(50, 0), // 50
     costMultiplier: 1.08,
     sellMultiplier: 1,
     speedMultiplier: 1,
@@ -47,7 +48,7 @@ export const PASTRIES: Pastry[] = [
     baseBuildTime: 2000,
     upgrades: BAGUETTE_UPGRADES,
     baseRevenue: new BigNum(15, 0),
-    baseCost: new BigNum(100, 0),
+    baseCost: new BigNum(250, 0), // 250
     costMultiplier: 1.08,
     sellMultiplier: 1,
     speedMultiplier: 1,
@@ -62,7 +63,7 @@ export const PASTRIES: Pastry[] = [
     baseBuildTime: 2500,
     upgrades: DONUT_UPGRADES,
     baseRevenue: new BigNum(40, 0),
-    baseCost: new BigNum(500, 0),
+    baseCost: new BigNum(10, 2), // 1k
     costMultiplier: 1.09,
     sellMultiplier: 1,
     speedMultiplier: 1,
@@ -75,9 +76,9 @@ export const PASTRIES: Pastry[] = [
     rank: 5,
     level: 0,
     baseBuildTime: 3000,
-    upgrades: [],
+    upgrades: BAGEL_UPGRADES,
     baseRevenue: new BigNum(100, 0),
-    baseCost: new BigNum(25, 3), // 2.5K
+    baseCost: new BigNum(40, 2), // 4k
     costMultiplier: 1.09,
     sellMultiplier: 1,
     speedMultiplier: 1,
@@ -90,9 +91,9 @@ export const PASTRIES: Pastry[] = [
     rank: 6,
     level: 0,
     baseBuildTime: 3500,
-    upgrades: [],
-    baseRevenue: new BigNum(250, 0),
-    baseCost: new BigNum(12, 3), // 12K
+    upgrades: CHEESE_PUFF_UPGRADES,
+    baseRevenue: new BigNum(400, 0),
+    baseCost: new BigNum(20, 3), // 20k
     costMultiplier: 1.1,
     sellMultiplier: 1,
     speedMultiplier: 1,
@@ -106,8 +107,8 @@ export const PASTRIES: Pastry[] = [
     level: 0,
     baseBuildTime: 4000,
     upgrades: [],
-    baseRevenue: new BigNum(600, 0),
-    baseCost: new BigNum(60, 3), // 60K
+    baseRevenue: new BigNum(850, 0),
+    baseCost: new BigNum(100, 3), // 100k
     costMultiplier: 1.1,
     sellMultiplier: 1,
     speedMultiplier: 1,
@@ -121,8 +122,8 @@ export const PASTRIES: Pastry[] = [
     level: 0,
     baseBuildTime: 5000,
     upgrades: [],
-    baseRevenue: new BigNum(1500, 0),
-    baseCost: new BigNum(300, 3), // 300K
+    baseRevenue: new BigNum(1.5, 3),
+    baseCost: new BigNum(400, 3), // 400k
     costMultiplier: 1.11,
     sellMultiplier: 1,
     speedMultiplier: 1,
@@ -136,8 +137,8 @@ export const PASTRIES: Pastry[] = [
     level: 0,
     baseBuildTime: 6000,
     upgrades: [],
-    baseRevenue: new BigNum(3500, 0),
-    baseCost: new BigNum(15, 6), // 1.5M
+    baseRevenue: new BigNum(3.5, 3),
+    baseCost: new BigNum(25, 5), // 2.5M
     costMultiplier: 1.11,
     sellMultiplier: 1,
     speedMultiplier: 1,
@@ -151,8 +152,8 @@ export const PASTRIES: Pastry[] = [
     level: 0,
     baseBuildTime: 7000,
     upgrades: [],
-    baseRevenue: new BigNum(8000, 0),
-    baseCost: new BigNum(75, 6), // 7.5M
+    baseRevenue: new BigNum(8, 3),
+    baseCost: new BigNum(15, 6), // 15M
     costMultiplier: 1.12,
     sellMultiplier: 1,
     speedMultiplier: 1,
@@ -166,8 +167,8 @@ export const PASTRIES: Pastry[] = [
     level: 0,
     baseBuildTime: 8000,
     upgrades: [],
-    baseRevenue: new BigNum(20000, 0),
-    baseCost: new BigNum(40, 6), // 40M
+    baseRevenue: new BigNum(2, 4),
+    baseCost: new BigNum(100, 6), // 100M
     costMultiplier: 1.12,
     sellMultiplier: 1,
     speedMultiplier: 1,
@@ -181,8 +182,8 @@ export const PASTRIES: Pastry[] = [
     level: 0,
     baseBuildTime: 9000,
     upgrades: [],
-    baseRevenue: new BigNum(50000, 0),
-    baseCost: new BigNum(200, 6), // 200M
+    baseRevenue: new BigNum(5, 4),
+    baseCost: new BigNum(800, 6), // 800M
     costMultiplier: 1.13,
     sellMultiplier: 1,
     speedMultiplier: 1,
@@ -196,8 +197,8 @@ export const PASTRIES: Pastry[] = [
     level: 0,
     baseBuildTime: 10000,
     upgrades: [],
-    baseRevenue: new BigNum(120000, 0),
-    baseCost: new BigNum(1, 9), // 1B
+    baseRevenue: new BigNum(12, 4),
+    baseCost: new BigNum(6.5, 9), // 1B
     costMultiplier: 1.13,
     sellMultiplier: 1,
     speedMultiplier: 1,
@@ -211,8 +212,8 @@ export const PASTRIES: Pastry[] = [
     level: 0,
     baseBuildTime: 12000,
     upgrades: [],
-    baseRevenue: new BigNum(300000, 0),
-    baseCost: new BigNum(5, 9), // 5B
+    baseRevenue: new BigNum(4, 5),
+    baseCost: new BigNum(50, 9), // 50B
     costMultiplier: 1.14,
     sellMultiplier: 1,
     speedMultiplier: 1,
@@ -226,8 +227,8 @@ export const PASTRIES: Pastry[] = [
     level: 0,
     baseBuildTime: 14000,
     upgrades: [],
-    baseRevenue: new BigNum(750000, 0),
-    baseCost: new BigNum(25, 9), // 25B
+    baseRevenue: new BigNum(8, 5),
+    baseCost: new BigNum(450, 9), // 450B
     costMultiplier: 1.14,
     sellMultiplier: 1,
     speedMultiplier: 1,
@@ -241,8 +242,8 @@ export const PASTRIES: Pastry[] = [
     level: 0,
     baseBuildTime: 16000,
     upgrades: [],
-    baseRevenue: new BigNum(2, 6), // 2M
-    baseCost: new BigNum(120, 9), // 120B
+    baseRevenue: new BigNum(3.5, 6),
+    baseCost: new BigNum(4, 12), // 120B
     costMultiplier: 1.15,
     sellMultiplier: 1,
     speedMultiplier: 1,
@@ -256,8 +257,8 @@ export const PASTRIES: Pastry[] = [
     level: 0,
     baseBuildTime: 18000,
     upgrades: [],
-    baseRevenue: new BigNum(5, 6), // 5M
-    baseCost: new BigNum(600, 9), // 600B
+    baseRevenue: new BigNum(5.5, 6),
+    baseCost: new BigNum(20, 12), // 20T
     costMultiplier: 1.15,
     sellMultiplier: 1,
     speedMultiplier: 1,
@@ -271,8 +272,8 @@ export const PASTRIES: Pastry[] = [
     level: 0,
     baseBuildTime: 20000,
     upgrades: [],
-    baseRevenue: new BigNum(12, 6), // 12M
-    baseCost: new BigNum(3, 12), // 3T
+    baseRevenue: new BigNum(1.5, 7),
+    baseCost: new BigNum(150, 12), // 150T
     costMultiplier: 1.16,
     sellMultiplier: 1,
     speedMultiplier: 1,
@@ -286,8 +287,8 @@ export const PASTRIES: Pastry[] = [
     level: 0,
     baseBuildTime: 22000,
     upgrades: [],
-    baseRevenue: new BigNum(30, 6), // 30M
-    baseCost: new BigNum(15, 12), // 15T
+    baseRevenue: new BigNum(4.5, 7),
+    baseCost: new BigNum(2.2, 15), // 2.2Qa
     costMultiplier: 1.16,
     sellMultiplier: 1,
     speedMultiplier: 1,
@@ -301,8 +302,8 @@ export const PASTRIES: Pastry[] = [
     level: 0,
     baseBuildTime: 25000,
     upgrades: [],
-    baseRevenue: new BigNum(75, 6), // 75M
-    baseCost: new BigNum(75, 12), // 75T
+    baseRevenue: new BigNum(9, 7),
+    baseCost: new BigNum(24, 15), // 24Qa
     costMultiplier: 1.17,
     sellMultiplier: 1,
     speedMultiplier: 1,
@@ -316,8 +317,8 @@ export const PASTRIES: Pastry[] = [
     level: 0,
     baseBuildTime: 28000,
     upgrades: [],
-    baseRevenue: new BigNum(200, 6), // 200M
-    baseCost: new BigNum(400, 12), // 400T
+    baseRevenue: new BigNum(3.2, 8), // 200M
+    baseCost: new BigNum(220, 15), // 220Qa
     costMultiplier: 1.17,
     sellMultiplier: 1,
     speedMultiplier: 1,
@@ -332,7 +333,7 @@ export const PASTRIES: Pastry[] = [
     baseBuildTime: 30000,
     upgrades: [],
     baseRevenue: new BigNum(500, 6), // 500M
-    baseCost: new BigNum(2, 15), // 2Qa
+    baseCost: new BigNum(9, 18), // 9Qi
     costMultiplier: 1.18,
     sellMultiplier: 1,
     speedMultiplier: 1,
@@ -347,7 +348,7 @@ export const PASTRIES: Pastry[] = [
     baseBuildTime: 35000,
     upgrades: [],
     baseRevenue: new BigNum(1.2, 9), // 1.2B
-    baseCost: new BigNum(10, 15), // 10Qa
+    baseCost: new BigNum(220, 18), // 220Qi
     costMultiplier: 1.18,
     sellMultiplier: 1,
     speedMultiplier: 1,
@@ -362,7 +363,7 @@ export const PASTRIES: Pastry[] = [
     baseBuildTime: 40000,
     upgrades: [],
     baseRevenue: new BigNum(3, 9), // 3B
-    baseCost: new BigNum(50, 15), // 50Qa
+    baseCost: new BigNum(14, 21), // 14Sx
     costMultiplier: 1.19,
     sellMultiplier: 1,
     speedMultiplier: 1,
@@ -377,7 +378,7 @@ export const PASTRIES: Pastry[] = [
     baseBuildTime: 45000,
     upgrades: [],
     baseRevenue: new BigNum(7.5, 9), // 7.5B
-    baseCost: new BigNum(250, 15), // 250Qa
+    baseCost: new BigNum(250, 21), // 250Sx
     costMultiplier: 1.19,
     sellMultiplier: 1,
     speedMultiplier: 1,
@@ -392,7 +393,7 @@ export const PASTRIES: Pastry[] = [
     baseBuildTime: 50000,
     upgrades: [],
     baseRevenue: new BigNum(20, 9), // 20B
-    baseCost: new BigNum(1, 18), // 1Qi
+    baseCost: new BigNum(25, 23), // 2.5Sp
     costMultiplier: 1.2,
     sellMultiplier: 1,
     speedMultiplier: 1,
@@ -406,8 +407,8 @@ export const PASTRIES: Pastry[] = [
     level: 0,
     baseBuildTime: 60000,
     upgrades: [],
-    baseRevenue: new BigNum(50, 9), // 50B
-    baseCost: new BigNum(5, 18), // 5Qi
+    baseRevenue: new BigNum(7.5, 10),
+    baseCost: new BigNum(1800, 23), // 180Sp
     costMultiplier: 1.2,
     sellMultiplier: 1,
     speedMultiplier: 1,
@@ -421,8 +422,8 @@ export const PASTRIES: Pastry[] = [
     level: 0,
     baseBuildTime: 70000,
     upgrades: [],
-    baseRevenue: new BigNum(120, 9), // 120B
-    baseCost: new BigNum(25, 18), // 25Qi
+    baseRevenue: new BigNum(1.35, 11),
+    baseCost: new BigNum(3.4, 27), // 3.4Oc
     costMultiplier: 1.21,
     sellMultiplier: 1,
     speedMultiplier: 1,
@@ -436,8 +437,8 @@ export const PASTRIES: Pastry[] = [
     level: 0,
     baseBuildTime: 80000,
     upgrades: [],
-    baseRevenue: new BigNum(300, 9), // 300B
-    baseCost: new BigNum(120, 18), // 120Qi
+    baseRevenue: new BigNum(3.5, 11),
+    baseCost: new BigNum(120, 27), // 120Oc
     costMultiplier: 1.21,
     sellMultiplier: 1,
     speedMultiplier: 1,
@@ -452,7 +453,7 @@ export const PASTRIES: Pastry[] = [
     baseBuildTime: 90000,
     upgrades: [],
     baseRevenue: new BigNum(1, 12), // 1T
-    baseCost: new BigNum(600, 18), // 600Qi
+    baseCost: new BigNum(250, 30), // 250No
     costMultiplier: 1.22,
     sellMultiplier: 1,
     speedMultiplier: 1,

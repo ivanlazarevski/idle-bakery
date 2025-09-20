@@ -36,7 +36,7 @@ export class Header {
       width: '250px',
       data: {
         title: 'Are you sure?',
-        message: 'This will clear your save data.',
+        message: `If you retire now, you will lose all progress, and gain ${this.potentialLifeLessons()} life lessons.`,
       },
     });
 

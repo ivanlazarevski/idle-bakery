@@ -178,8 +178,8 @@ export class GameStore {
       new BigNum(this.globalSellMultiplier(), 0),
     );
 
-    // apply prestige multiplier: +1% per life lesson
-    const prestigeMultiplier = 1 + this.lifeLessons() * 0.01;
+    // apply prestige multiplier: +10% per life lesson
+    const prestigeMultiplier = 1 + this.lifeLessons() * 0.1;
     return BigNum.multiply(
       withGlobalMultiplier,
       new BigNum(prestigeMultiplier, 0),

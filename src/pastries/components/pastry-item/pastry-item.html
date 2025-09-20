@@ -11,9 +11,12 @@
     <button (click)="build()" [disabled]="isBuilding() || pastry().level === 0">
       {{ isBuilding() ? "Baking..." : "Bake & Sell" }}
     </button>
-
     <button (click)="levelUp()"
-            [class.pulse]="pastry().level === 0 && store.hasEnoughMoney(pastry().baseCost)">
+            [class.pulse]="pastry().level === 0 && store.hasEnoughMoney(pastry().baseCost)"
+            matBadge="Unlock!"
+            [matBadgeHidden]="pastry().level > 0 || !store.hasEnoughMoney(pastry().baseCost)"
+            matBadgePosition="above after"
+    >
       {{pastry().level === 0 ? "Unlock" : "Level Up"}}
        ({{ nextCost.toSuffixString() }})
     </button>

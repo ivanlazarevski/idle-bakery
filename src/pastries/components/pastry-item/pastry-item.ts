@@ -1,15 +1,16 @@
 import { Component, inject, signal, input } from '@angular/core';
-import { Pastry, PastryUpgrade } from '@pastries/data/pastry.type';
+import { Pastry } from '@pastries/data/pastry.type';
 import { GameStore } from '@pastries/game.store';
 import { BigNum } from '@pastries/data/bignum.util';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import {MatBadgeModule} from '@angular/material/badge';
 
 @Component({
   selector: 'pastry-item',
   templateUrl: './pastry-item.html',
   styleUrls: ['./pastry-item.scss'],
-  imports: [MatCheckboxModule, MatTooltipModule],
+  imports: [MatCheckboxModule, MatTooltipModule, MatBadgeModule],
 })
 export class PastryItemComponent {
   public pastry = input.required<Pastry>();

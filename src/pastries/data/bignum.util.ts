@@ -13,7 +13,7 @@ export class BigNum {
   }
 
   // Ensure 1 <= |mantissa| < 10 (unless zero) and clamp to MAX_EXPONENT
-  private normalize() {
+   public normalize() {
     if (!isFinite(this.mantissa) || isNaN(this.mantissa)) {
       this.mantissa = 0;
       this.exponent = 0;
@@ -105,6 +105,10 @@ export class BigNum {
 
   static multiply(a: BigNum, b: BigNum): BigNum {
     return new BigNum(a.mantissa * b.mantissa, a.exponent + b.exponent);
+  }
+
+  static divide(a: BigNum, b: BigNum): BigNum {
+    return new BigNum(a.mantissa / b.mantissa, a.exponent - b.exponent);
   }
 
   // format as suffix-based string, e.g. "1.23M"
