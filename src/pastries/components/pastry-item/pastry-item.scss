@@ -115,6 +115,11 @@
   max-height: 0;
 }
 
+.bulk-buy {
+  color: var(--cBrown-dark);
+}
+
+
 @keyframes pulse {
   0% {
     transform: scale(1);

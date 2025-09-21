@@ -1,7 +1,7 @@
 <header class="header fixed">
   <div class="left-panel">
     <div class="title">Idle Bakery</div>
-    <div class="ascension" matBadge="new!" matBadgePosition="after">
+    <div class="ascension">
       <p
         class="ascension-value"
         matTooltip="Each life lesson increases the global sell value by +10%"
@@ -35,8 +35,6 @@
         matButton="elevated"
         color="accent"
         (click)="toggleMusic()"
-        matBadge="new!"
-        matBadgePosition="after"
       >
         @if (musicPlaying()) {
           <mat-icon>music_note</mat-icon>

@@ -1,4 +1,12 @@
-import { Component, inject, input, signal, linkedSignal } from '@angular/core';
+import {
+  Component,
+  inject,
+  input,
+  signal,
+  linkedSignal,
+  HostListener,
+  computed,
+} from '@angular/core';
 import { Pastry } from '@pastries/data/pastry.type';
 import { GameStore } from '@pastries/game.store';
 import { BigNum } from '@pastries/data/bignum.util';
@@ -6,8 +14,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import {MatIconModule} from '@angular/material/icon'
-import {MatButtonModule} from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { MusicService } from '../../../music/music';
 import { Sfx } from '../../../music/sfx.enum';
 
@@ -21,7 +29,7 @@ import { Sfx } from '../../../music/sfx.enum';
     MatBadgeModule,
     MatSlideToggleModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
   ],
 })
 export class PastryItemComponent {
@@ -31,7 +39,46 @@ export class PastryItemComponent {
 
   isBuilding = signal(false);
   public collapsed = linkedSignal(() => {
-    return this.pastry().level > 0
+    return this.pastry().level > 0;
+  });
+
+  ctrlDown = signal(false);
+  shiftDown = signal(false);
+
+  @HostListener('window:keydown', ['$event'])
+  handleKeyDown(event: KeyboardEvent) {
+    if (event.code === 'ControlLeft') this.ctrlDown.set(true);
+    if (event.code === 'ShiftLeft') this.shiftDown.set(true);
+  }
+
+  @HostListener('window:keyup', ['$event'])
+  handleKeyUp(event: KeyboardEvent) {
+    if (event.code === 'ControlLeft') this.ctrlDown.set(false);
+    if (event.code === 'ShiftLeft') this.shiftDown.set(false);
+  }
+
+  bulkCount = computed(() => {
+    if (this.ctrlDown()) return 10;
+    if (this.shiftDown()) return 25;
+    return 1;
+  });
+
+  bulkCost = computed(() => {
+    const p = this.pastry();
+    if (!p || p.level === 0 || this.bulkCount() === 1) {
+      return this.store.getNextCost(p);
+    }
+
+    let total = new BigNum(0, 0);
+    let temp = { ...p };
+
+    for (let i = 0; i < this.bulkCount(); i++) {
+      const cost = this.store.getNextCost(temp);
+      total = BigNum.add(total, cost);
+      temp = { ...temp, level: temp.level + 1 };
+    }
+
+    return total;
   });
 
   build(source: string = 'base') {
@@ -69,7 +116,7 @@ export class PastryItemComponent {
   }
 
   levelUp() {
-    this.store.levelUp(this.pastry().id);
+    this.store.levelUpBulk(this.pastry().id, 1);
   }
 
   get earnings(): BigNum {
@@ -82,5 +129,9 @@ export class PastryItemComponent {
 
   toggleCollapse(): void {
     this.collapsed.set(!this.collapsed());
+  }
+
+  levelUpBulk(): void {
+    this.store.levelUpBulk(this.pastry().id, this.bulkCount());
   }
 }

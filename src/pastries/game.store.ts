@@ -141,17 +141,13 @@ export class GameStore {
     return updated;
   }
 
-  // level up pastry if player can afford next cost
-  levelUp(pastryId: number): void {
+  private levelUp(pastryId: number): void {
     this.pastries.update((list) =>
       list.map((p) => {
         if (p.id !== pastryId) return p;
 
         const cost = this.getNextCost(p);
         if (!this.spendMoney(cost)) return p; // can't afford
-        if(p.level === 0) {
-          this.musicService.playSfxSound(Sfx.UNLOCK);
-        }
         return { ...p, level: p.level + 1 };
       }),
     );
@@ -376,5 +372,31 @@ export class GameStore {
 
   hasEnoughMoney(cost: BigNum): boolean {
     return BigNum.compare(this.money(), cost) >= 0;
+  }
+
+  levelUpBulk(pastryId: number, count: number): void {
+    this.pastries.update((list) =>
+      list.map((p) => {
+        if (p.id !== pastryId) return p;
+
+        let newPastry = { ...p };
+        let unlocked = false;
+
+        for (let i = 0; i < count; i++) {
+          const cost = this.getNextCost(newPastry);
+          if (!this.spendMoney(cost)) break; // stop if you can’t afford
+
+          // Handle unlock sound only once
+          if (newPastry.level === 0 && !unlocked) {
+            this.musicService.playSfxSound(Sfx.UNLOCK);
+            unlocked = true;
+          }
+
+          newPastry = { ...newPastry, level: newPastry.level + 1 };
+        }
+
+        return newPastry;
+      }),
+    );
   }
 }

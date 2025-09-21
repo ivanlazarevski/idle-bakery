@@ -8,7 +8,7 @@
       </div>
     </div>
     <button matMiniFab (click)="toggleCollapse()">
-      @if(collapsed()) {
+      @if (collapsed()) {
         <mat-icon>keyboard_arrow_down</mat-icon>
       } @else {
         <mat-icon>keyboard_arrow_up</mat-icon>
@@ -17,6 +17,7 @@
   </div>
 
   <div class="item-content">
+    <p class="bulk-buy text-xs my-1">Press Ctrl to level up x10. Press Shift to level up x25.</p>
     <div class="actions">
       <button
         (click)="build('click')"
@@ -24,20 +25,27 @@
       >
         {{ isBuilding() ? "Baking..." : "Bake & Sell" }}
       </button>
-      <button
-        (click)="levelUp()"
-        [class.pulse]="
-          pastry().level === 0 && store.hasEnoughMoney(pastry().baseCost)
-        "
-        matBadge="Unlock!"
-        [matBadgeHidden]="
-          pastry().level > 0 || !store.hasEnoughMoney(pastry().baseCost)
-        "
-        matBadgePosition="above after"
-      >
-        {{ pastry().level === 0 ? "Unlock" : "Level Up" }}
-        ({{ nextCost.toSuffixString() }})
-      </button>
+      @if (!ctrlDown() && !shiftDown()) {
+        <button
+          (click)="levelUp()"
+          [class.pulse]="
+            pastry().level === 0 && store.hasEnoughMoney(pastry().baseCost)
+          "
+          matBadge="Unlock!"
+          [matBadgeHidden]="
+            pastry().level > 0 || !store.hasEnoughMoney(pastry().baseCost)
+          "
+          matBadgePosition="above after"
+        >
+          {{ pastry().level === 0 ? "Unlock" : "Level Up" }}
+          ({{ nextCost.toSuffixString() }})
+        </button>
+      } @else {
+        <button (click)="levelUpBulk()">
+          {{'Level Up x' + bulkCount()}}
+          ({{ bulkCost().toSuffixString() }})
+        </button>
+      }
     </div>
 
     <div class="upgrade-list my-4" [class.collapsed]="!collapsed()">
