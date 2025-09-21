@@ -1,10 +1,13 @@
-import { Component, inject, input, signal } from '@angular/core';
+import { Component, inject, input, signal, linkedSignal } from '@angular/core';
 import { Pastry } from '@pastries/data/pastry.type';
 import { GameStore } from '@pastries/game.store';
 import { BigNum } from '@pastries/data/bignum.util';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import {MatIconModule} from '@angular/material/icon'
+import {MatButtonModule} from '@angular/material/button';
 import { MusicService } from '../../../music/music';
 import { Sfx } from '../../../music/sfx.enum';
 
@@ -12,7 +15,14 @@ import { Sfx } from '../../../music/sfx.enum';
   selector: 'pastry-item',
   templateUrl: './pastry-item.html',
   styleUrls: ['./pastry-item.scss'],
-  imports: [MatCheckboxModule, MatTooltipModule, MatBadgeModule],
+  imports: [
+    MatCheckboxModule,
+    MatTooltipModule,
+    MatBadgeModule,
+    MatSlideToggleModule,
+    MatIconModule,
+    MatButtonModule
+  ],
 })
 export class PastryItemComponent {
   public pastry = input.required<Pastry>();
@@ -20,6 +30,9 @@ export class PastryItemComponent {
   public store = inject(GameStore);
 
   isBuilding = signal(false);
+  public collapsed = linkedSignal(() => {
+    return this.pastry().level > 0
+  });
 
   build(source: string = 'base') {
     const progressSignal = this.store.pastryProgress.get(this.pastry().id);
@@ -65,5 +78,9 @@ export class PastryItemComponent {
 
   buyUpgrade(upgrade: number): void {
     this.store.buyUpgrade(this.pastry().id, upgrade);
+  }
+
+  toggleCollapse(): void {
+    this.collapsed.set(!this.collapsed());
   }
 }
