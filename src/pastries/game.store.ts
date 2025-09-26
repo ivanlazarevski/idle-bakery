@@ -12,8 +12,9 @@ import {
   PastryUpgradeType,
 } from '@pastries/data/pastry.type';
 import { PASTRIES } from '@pastries/data/pastries.data';
-import { MusicService } from '../music/music';
+import { MusicService } from '../music/music.service';
 import { Sfx } from '../music/sfx.enum';
+import { PersistenceService } from '@pastries/persistence.service';
 
 const SAVE_KEY = 'bakery_save_v1';
 
@@ -22,6 +23,7 @@ const SAVE_KEY = 'bakery_save_v1';
 })
 export class GameStore {
   private musicService = inject(MusicService);
+  private persistenceService = inject(PersistenceService);
 
   money = signal(new BigNum(0, 0));
   pastries = signal<Pastry[]>([]);
@@ -29,6 +31,16 @@ export class GameStore {
   totalPastryLevels = computed(() =>
     this.pastries().reduce((sum, p) => sum + p.level, 0),
   );
+
+  pastriesSoldMap = signal<Map<number, number>>(new Map());
+
+  totalPastriesSold = computed(() => {
+    let total = 0;
+    for (const [key,value] of this.pastriesSoldMap()) {
+      total += value;
+    }
+    return total;
+  });
 
   lifeLessons = signal(0);
   globalSellMultiplier = signal(1);
@@ -54,13 +66,13 @@ export class GameStore {
     this.pastries.set(cloned);
 
     // load saved state (if any)
-    this.loadState();
+    this.persistenceService.loadState(this);
 
     // auto-save whenever money or pastries change
     effect(() => {
       this.money();
       this.pastries();
-      this.saveState();
+      this.persistenceService.saveState(this);
     });
 
     this.pastries().forEach((p) => {
@@ -113,7 +125,7 @@ export class GameStore {
     );
   }
 
-  private applyUpgrade(p: Pastry, upgrade: PastryUpgrade): Pastry {
+  public applyUpgrade(p: Pastry, upgrade: PastryUpgrade): Pastry {
     let updated = { ...p };
     switch (upgrade.type) {
       case PastryUpgradeType.SellMultiplier:
@@ -141,19 +153,6 @@ export class GameStore {
     return updated;
   }
 
-  private levelUp(pastryId: number): void {
-    this.pastries.update((list) =>
-      list.map((p) => {
-        if (p.id !== pastryId) return p;
-
-        const cost = this.getNextCost(p);
-        if (!this.spendMoney(cost)) return p; // can't afford
-        return { ...p, level: p.level + 1 };
-      }),
-    );
-  }
-
-  // price = baseCost * costMultiplier^level
   getNextCost(p: Pastry): BigNum {
     // compute multiplier^level as a JS number (may lose precision at extreme levels,
     // but it is capped by Vigintillion, so it's acceptable for now)
@@ -189,153 +188,11 @@ export class GameStore {
     );
   }
 
-  // ---------- persistence ----------
-  private saveState(): void {
-    try {
-      const payload = {
-        money: this.money().toObject(),
-        lifeLessons: this.lifeLessons(),
-        globalSellMultiplier: this.globalSellMultiplier(),
-        globalSpeedMultiplier: this.globalSpeedMultiplier(),
-        pastries: this.pastries().map((p) => ({
-          id: p.id,
-          level: p.level,
-          upgrades: p.upgrades.map((u) => ({
-            id: u.id,
-            purchased: u.purchased,
-          })),
-        })),
-      };
-      localStorage.setItem(SAVE_KEY, JSON.stringify(payload));
-    } catch (e) {
-      console.warn('Failed saving game state:', e);
-    }
-  }
-
-  private loadState(): void {
-    try {
-      const raw = localStorage.getItem(SAVE_KEY);
-      if (!raw) return;
-
-      const parsed = JSON.parse(raw);
-
-      // restore money
-      if (parsed?.money) {
-        this.money.set(BigNum.fromObject(parsed.money));
-      }
-
-      // Restore Global Sell Multiplier
-      if (parsed?.globalSellMultiplier != null) {
-        this.globalSellMultiplier.set(parsed.globalSellMultiplier);
-      }
-
-      // Restore Global Speed Multiplier
-      if (parsed?.globalSpeedMultiplier != null) {
-        this.globalSpeedMultiplier.set(parsed.globalSpeedMultiplier);
-      }
-
-      // restore lifeLessons
-      if (parsed?.lifeLessons != null && !isNaN(Number(parsed.lifeLessons))) {
-        this.lifeLessons.set(Math.floor(Number(parsed.lifeLessons)));
-      }
-
-      // restore pastries
-      if (Array.isArray(parsed?.pastries)) {
-        const savedMap = new Map<number, any>();
-        for (const p of parsed.pastries) {
-          if (typeof p.id === 'number') {
-            savedMap.set(p.id, p);
-          }
-        }
-
-        this.pastries.update((list) =>
-          list.map((p) => {
-            const saved = savedMap.get(p.id);
-            if (!saved) return p;
-
-            // merge upgrades (set purchased flag from save)
-            const mergedUpgrades = p.upgrades.map((u) => {
-              const savedUpgrade = saved.upgrades?.find(
-                (su: any) => su.id === u.id,
-              );
-              return savedUpgrade
-                ? { ...u, purchased: !!savedUpgrade.purchased }
-                : u;
-            });
-
-            // build pastry with saved core properties
-            let merged: Pastry = {
-              ...p,
-              level: saved.level ?? p.level,
-              sellMultiplier: 1, // upgrades will re-apply reset to defaults
-              speedMultiplier: 1,
-              automation: false,
-              upgrades: mergedUpgrades,
-            };
-
-            // re-apply purchased upgrades to restore multipliers/automation
-            for (const u of mergedUpgrades) {
-              if (u.purchased) {
-                if (
-                  u.type !== PastryUpgradeType.GlobalSellMultiplier &&
-                  u.type !== PastryUpgradeType.GlobalSpeedMultiplier
-                ) {
-                  merged = this.applyUpgrade(merged, u);
-                }
-              }
-            }
-
-            return merged;
-          }),
-        );
-      }
-    } catch (e) {
-      console.warn('Failed loading game state:', e);
-    }
-  }
-
   clearSave(): void {
-    // Remove saved data
-    localStorage.removeItem(SAVE_KEY);
-
-    // Reset money
-    this.money.set(new BigNum(0, 0));
-    this.updateLifeLessons();
-
-    this.globalSellMultiplier.set(1);
-    this.globalSpeedMultiplier.set(1);
-
-    // Reset pastries
-    this.pastries.update((list) =>
-      list.map((p) => {
-        // reset upgrades
-        const resetUpgrades = p.upgrades.map((u) => ({
-          ...u,
-          purchased: false,
-        }));
-
-        // reset core properties
-        const resetPastry: Pastry = {
-          ...p,
-          level: p.id === 1 ? 1 : 0,
-          sellMultiplier: 1,
-          speedMultiplier: 1,
-          automation: false,
-          upgrades: resetUpgrades,
-        };
-
-        // reset progress signal
-        const progressSignal = this.pastryProgress.get(p.id);
-        if (progressSignal) progressSignal.set(0);
-
-        return resetPastry;
-      }),
-    );
-
-    window.location.reload();
+    this.persistenceService.resetState(this);
   }
 
-  private updateLifeLessons(): void {
+  public updateLifeLessons(): void {
     // Earn 1 life lesson per 100 levels
     const earnedLessons = Math.floor(this.totalPastryLevels() / 100);
     this.lifeLessons.update((prev) => prev + earnedLessons);
@@ -344,25 +201,30 @@ export class GameStore {
   startAutomationLoop(intervalMs = 50): void {
     if (this.automationInterval) return;
 
+    let lastTick = Date.now();
+
     this.automationInterval = setInterval(() => {
+      const now = Date.now();
+      const deltaMs = now - lastTick;
+      lastTick = now;
+
       this.pastries().forEach((p) => {
         if (!p.automation) return;
 
         const progressSignal = this.pastryProgress.get(p.id);
         if (!progressSignal) return;
 
-        const speed = p.speedMultiplier ?? 1;
         const increment =
-          (intervalMs /
+          (deltaMs /
             (p.baseBuildTime /
               ((p.speedMultiplier ?? 1) * this.globalSpeedMultiplier()))) *
           100;
 
         let newProgress = progressSignal() + increment;
-        if (newProgress >= 100) {
+        while (newProgress >= 100) {
           const earned = this.getEarnings(p);
           this.addMoney(earned);
-          newProgress = 0;
+          newProgress -= 100; // subtract instead of reset, handles overflow
         }
 
         progressSignal.set(newProgress);
@@ -398,5 +260,15 @@ export class GameStore {
         return newPastry;
       }),
     );
+  }
+
+  // Achievements
+
+  incrementPastrySold(pastryId: number, amount: number = 1) {
+    this.pastriesSoldMap.update((map) => {
+      const current = map.get(pastryId) ?? 0;
+      map.set(pastryId, current + amount);
+      return map;
+    });
   }
 }

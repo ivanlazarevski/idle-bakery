@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { GenericDialog } from '@components/generic-dialog/generic-dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MusicService } from '../../music/music';
+import { MusicService } from '../../music/music.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
 

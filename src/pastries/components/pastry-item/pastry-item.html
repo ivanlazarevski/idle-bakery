@@ -9,9 +9,9 @@
     </div>
     <button matMiniFab (click)="toggleCollapse()">
       @if (collapsed()) {
-        <mat-icon>keyboard_arrow_down</mat-icon>
-      } @else {
         <mat-icon>keyboard_arrow_up</mat-icon>
+      } @else {
+        <mat-icon>keyboard_arrow_down</mat-icon>
       }
     </button>
   </div>
@@ -25,7 +25,7 @@
       >
         {{ isBuilding() ? "Baking..." : "Bake & Sell" }}
       </button>
-      @if (!ctrlDown() && !shiftDown()) {
+      @if (!ctrlDown() && !shiftDown() || pastry().level === 0) {
         <button
           (click)="levelUp()"
           [class.pulse]="

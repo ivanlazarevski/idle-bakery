@@ -16,7 +16,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { MusicService } from '../../../music/music';
+import { MusicService } from '../../../music/music.service';
 import { Sfx } from '../../../music/sfx.enum';
 
 @Component({
