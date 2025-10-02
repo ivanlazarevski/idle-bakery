@@ -1,7 +1,7 @@
-<header class="header fixed">
-  <div class="left-panel">
+<header class="header fixed md:flex md:px-8 px-4">
+  <div class="left-panel flex justify-between">
     <div class="title">Idle Bakery</div>
-    <div class="ascension">
+    <div class="ascension hidden md:block">
       <p
         class="ascension-value"
         matTooltip="Each life lesson increases the global sell value by +10%"
@@ -13,46 +13,51 @@
         you retire now.
       </p>
     </div>
+    <div class="md:hidden block">
+      <button matMiniFab (click)="toggleMenu()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
   </div>
-  <div class="right-panel">
-    <div class="money">
-      <img src="/fc131.png" alt="money-icon" class="money-icon" />
-      <p class="money-value">{{ money().toSuffixString() }}</p>
-    </div>
+  <div class="right-panel md:flex hidden">
+    <ng-container *ngTemplateOutlet="moneyRef" />
 
-    @if(sfxEnabled()) {
-      <button matMiniFab (click)="toggleAudio(false)" matTooltip="Toggle SFX!">
+    <button matMiniFab (click)="toggleAudio()" matTooltip="Toggle SFX!">
+      @if (sfxEnabled()) {
         <mat-icon>volume_up</mat-icon>
-      </button>
-    } @else {
-      <button matMiniFab (click)="toggleAudio(true)" matTooltip="Toggle SFX!">
+      } @else {
         <mat-icon>volume_off</mat-icon>
-      </button>
-    }
+      }
+    </button>
 
-    <div class="actions">
-      <button
-        matButton="elevated"
-        color="accent"
-        (click)="toggleMusic()"
-      >
-        @if (musicPlaying()) {
-          <mat-icon>music_note</mat-icon>
-        } @else {
-          <mat-icon>music_off</mat-icon>
-        }
-        Toggle Music
-      </button>
-      <button
-        [matTooltip]="
-          'Clicking this will immediately delete all progress! You will gain a number of life lessons based on your total pastry level.'
-        "
-        (click)="openConfirmDialog()"
-        matButton="filled"
-        color="primary"
-      >
-        Retire Now
-      </button>
-    </div>
+    <button matButton="elevated" color="accent" (click)="toggleMusic()">
+      @if (musicPlaying()) {
+        <mat-icon>music_note</mat-icon>
+      } @else {
+        <mat-icon>music_off</mat-icon>
+      }
+      Toggle Music
+    </button>
+
+    <button
+      [matTooltip]="
+        'Clicking this will immediately delete all progress! You will gain a number of life lessons based on your total pastry level.'
+      "
+      (click)="openConfirmDialog()"
+      matButton="filled"
+      color="primary"
+    >
+      Retire Now
+    </button>
+  </div>
+  <div class="md:hidden block">
+    <ng-container *ngTemplateOutlet="moneyRef" />
   </div>
 </header>
+
+<ng-template #moneyRef>
+  <div class="money">
+    <img src="/fc131.png" alt="money-icon" class="md:h-16 md:w-16 h-8 w-8" />
+    <p class="money-value">{{ money().toSuffixString() }}</p>
+  </div>
+</ng-template>

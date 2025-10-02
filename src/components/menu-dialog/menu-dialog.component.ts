@@ -1,43 +1,31 @@
 import { Component, computed, inject } from '@angular/core';
 import { GameStore } from '@pastries/game.store';
-import { MatButtonModule } from '@angular/material/button';
+import { MusicService } from '../../music/music.service';
+import { MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
 import { GenericDialog } from '@components/generic-dialog/generic-dialog';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MusicService } from '../../music/music.service';
-import { MatIconModule } from '@angular/material/icon';
-import { MatBadgeModule } from '@angular/material/badge';
-import { MenuDialogComponent } from '@components/menu-dialog/menu-dialog.component';
-import { NgTemplateOutlet } from '@angular/common';
 
 @Component({
-  selector: 'app-header',
-  imports: [
-    MatButtonModule,
-    MatTooltipModule,
-    MatIconModule,
-    MatBadgeModule,
-    NgTemplateOutlet,
-  ],
-  templateUrl: './header.html',
-  styleUrl: './header.scss',
+  selector: 'menu-dialog',
+  imports: [MatButton, MatIcon],
+  templateUrl: './menu-dialog.component.html',
+  styleUrl: './menu-dialog.component.scss',
 })
-export class Header {
+export class MenuDialogComponent {
   public store = inject(GameStore);
   public musicService = inject(MusicService);
-
-  public money = this.store.money;
   readonly dialog = inject(MatDialog);
+
   public musicPlaying = this.musicService.musicEnabled;
   public totalPastryLevels = this.store.totalPastryLevels;
-  public lifeLessons = this.store.lifeLessons;
   public sfxEnabled = this.musicService.sfxEnabled;
   public potentialLifeLessons = computed(() => {
     return Math.floor(this.totalPastryLevels() / 100);
   });
 
-  public clearStorage(): void {
-    this.store.clearSave();
+  public toggleMusic(): void {
+    this.musicService.toggleMusic();
   }
 
   public openConfirmDialog(): void {
@@ -51,21 +39,13 @@ export class Header {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.clearStorage();
+        this.store.clearSave();
         alert('Save data cleared.');
       }
     });
   }
 
-  public toggleMusic(): void {
-    this.musicService.toggleMusic();
-  }
-
   public toggleAudio(): void {
     this.musicService.toggleSfx(!this.musicService.sfxEnabled());
-  }
-
-  public toggleMenu(): void {
-    const menuDialog = this.dialog.open(MenuDialogComponent, {});
   }
 }

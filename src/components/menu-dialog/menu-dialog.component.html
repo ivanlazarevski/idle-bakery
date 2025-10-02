@@ -1,0 +1,28 @@
+<div class="p-4 flex flex-col gap-4 menu">
+  <h2 class="menu-title">Menu</h2>
+  <button matButton="elevated" color="accent" (click)="toggleMusic()">
+    @if (musicPlaying()) {
+      <mat-icon>music_note</mat-icon>
+    } @else {
+      <mat-icon>music_off</mat-icon>
+    }
+    Toggle Music
+  </button>
+
+  <button matButton="elevated" color="accent" (click)="toggleAudio()">
+    @if (sfxEnabled()) {
+      <mat-icon>volume_up</mat-icon>
+    } @else {
+      <mat-icon>volume_off</mat-icon>
+    }
+    Toggle SFX
+  </button>
+
+  <button
+    (click)="openConfirmDialog()"
+    matButton="filled"
+    color="primary"
+  >
+    Retire Now
+  </button>
+</div>
