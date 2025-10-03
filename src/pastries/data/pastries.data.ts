@@ -1,12 +1,12 @@
 import { Pastry } from './pastry.type';
 import { BigNum } from './bignum.util';
-import {
-  BAGEL_UPGRADES,
-  BAGUETTE_UPGRADES,
-  BREAD_UPGRADES, CHEESE_PUFF_UPGRADES,
-  CROISSANT_UPGRADES,
-  DONUT_UPGRADES
-} from '@pastries/data/pastry-upgrades.data';
+import { BREAD_UPGRADES } from '@pastries/data/upgrades/bread.upgrades';
+import { CROISSANT_UPGRADES } from '@pastries/data/upgrades/croissant.upgrades';
+import { BAGUETTE_UPGRADES } from '@pastries/data/upgrades/baguette.upgrades';
+import { DONUT_UPGRADES } from '@pastries/data/upgrades/donut.upgrades';
+import { BAGEL_UPGRADES } from '@pastries/data/upgrades/bagel.upgrades';
+import { CHEESE_PUFF_UPGRADES } from '@pastries/data/upgrades/cheesepuff.upgrades';
+import { SCONE_UPGRADES } from '@pastries/data/upgrades/scone.upgrades';
 
 export const PASTRIES: Pastry[] = [
   {
@@ -106,7 +106,7 @@ export const PASTRIES: Pastry[] = [
     rank: 7,
     level: 0,
     baseBuildTime: 4000,
-    upgrades: [],
+    upgrades: SCONE_UPGRADES,
     baseRevenue: new BigNum(850, 0),
     baseCost: new BigNum(100, 3), // 100k
     costMultiplier: 1.1,
@@ -258,7 +258,7 @@ export const PASTRIES: Pastry[] = [
     baseBuildTime: 18000,
     upgrades: [],
     baseRevenue: new BigNum(5.5, 6),
-    baseCost: new BigNum(20, 12), // 20T
+    baseCost: new BigNum(36, 12), // 36T
     costMultiplier: 1.15,
     sellMultiplier: 1,
     speedMultiplier: 1,
@@ -273,7 +273,7 @@ export const PASTRIES: Pastry[] = [
     baseBuildTime: 20000,
     upgrades: [],
     baseRevenue: new BigNum(1.5, 7),
-    baseCost: new BigNum(150, 12), // 150T
+    baseCost: new BigNum(300, 12),
     costMultiplier: 1.16,
     sellMultiplier: 1,
     speedMultiplier: 1,
@@ -288,7 +288,7 @@ export const PASTRIES: Pastry[] = [
     baseBuildTime: 22000,
     upgrades: [],
     baseRevenue: new BigNum(4.5, 7),
-    baseCost: new BigNum(2.2, 15), // 2.2Qa
+    baseCost: new BigNum(3.2, 15), // 3.2Qa
     costMultiplier: 1.16,
     sellMultiplier: 1,
     speedMultiplier: 1,
@@ -303,7 +303,7 @@ export const PASTRIES: Pastry[] = [
     baseBuildTime: 25000,
     upgrades: [],
     baseRevenue: new BigNum(9, 7),
-    baseCost: new BigNum(24, 15), // 24Qa
+    baseCost: new BigNum(32, 15), // 32Qa
     costMultiplier: 1.17,
     sellMultiplier: 1,
     speedMultiplier: 1,
@@ -318,7 +318,7 @@ export const PASTRIES: Pastry[] = [
     baseBuildTime: 28000,
     upgrades: [],
     baseRevenue: new BigNum(3.2, 8), // 200M
-    baseCost: new BigNum(220, 15), // 220Qa
+    baseCost: new BigNum(320, 15), // 320Qa
     costMultiplier: 1.17,
     sellMultiplier: 1,
     speedMultiplier: 1,
@@ -333,7 +333,7 @@ export const PASTRIES: Pastry[] = [
     baseBuildTime: 30000,
     upgrades: [],
     baseRevenue: new BigNum(500, 6), // 500M
-    baseCost: new BigNum(9, 18), // 9Qi
+    baseCost: new BigNum(12, 18), // 12Qi
     costMultiplier: 1.18,
     sellMultiplier: 1,
     speedMultiplier: 1,

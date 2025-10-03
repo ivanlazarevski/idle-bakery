@@ -1,9 +1,10 @@
 import {
   computed,
-  effect, inject,
+  effect,
+  inject,
   Injectable,
   signal,
-  WritableSignal
+  WritableSignal,
 } from '@angular/core';
 import { BigNum } from '@pastries/data/bignum.util';
 import {
@@ -15,8 +16,6 @@ import { PASTRIES } from '@pastries/data/pastries.data';
 import { MusicService } from '../music/music.service';
 import { Sfx } from '../music/sfx.enum';
 import { PersistenceService } from '@pastries/persistence.service';
-
-const SAVE_KEY = 'bakery_save_v1';
 
 @Injectable({
   providedIn: 'root',
@@ -36,12 +35,13 @@ export class GameStore {
 
   totalPastriesSold = computed(() => {
     let total = 0;
-    for (const [key,value] of this.pastriesSoldMap()) {
+    for (const [key, value] of this.pastriesSoldMap()) {
       total += value;
     }
     return total;
   });
 
+  public readonly lifeLessonsFactor = 500;
   lifeLessons = signal(0);
   globalSellMultiplier = signal(1);
   globalSpeedMultiplier = signal(1);
@@ -84,11 +84,11 @@ export class GameStore {
     this.startAutomationLoop();
   }
 
-  addMoney(amount: BigNum): void {
+  public addMoney(amount: BigNum): void {
     this.money.update((m) => BigNum.add(m, amount));
   }
 
-  spendMoney(cost: BigNum): boolean {
+  private spendMoney(cost: BigNum): boolean {
     const current = this.money();
     if (BigNum.compare(current, cost) >= 0) {
       this.money.set(BigNum.subtract(current, cost));
@@ -97,7 +97,7 @@ export class GameStore {
     return false;
   }
 
-  buyUpgrade(pastryId: number, upgradeId: number): void {
+  public buyUpgrade(pastryId: number, upgradeId: number): void {
     this.pastries.update((list) =>
       list.map((p) => {
         if (p.id !== pastryId) return p;
@@ -153,14 +153,14 @@ export class GameStore {
     return updated;
   }
 
-  getNextCost(p: Pastry): BigNum {
+  public getNextCost(p: Pastry): BigNum {
     // compute multiplier^level as a JS number (may lose precision at extreme levels,
     // but it is capped by Vigintillion, so it's acceptable for now)
     const multiplierPow = Math.pow(p.costMultiplier, p.level);
     return BigNum.multiply(p.baseCost, new BigNum(multiplierPow, 0));
   }
 
-  getEarnings(p: Pastry): BigNum {
+  public getEarnings(p: Pastry): BigNum {
     if (p.level === 0) {
       return new BigNum(0, 0);
     }
@@ -180,7 +180,7 @@ export class GameStore {
       new BigNum(this.globalSellMultiplier(), 0),
     );
 
-    // apply prestige multiplier: +10% per life lesson
+    // apply prestige multiplier: +1% per life lesson
     const prestigeMultiplier = 1 + this.lifeLessons() * 0.1;
     return BigNum.multiply(
       withGlobalMultiplier,
@@ -188,7 +188,7 @@ export class GameStore {
     );
   }
 
-  clearSave(): void {
+  public clearSave(): void {
     this.persistenceService.resetState(this);
   }
 
@@ -198,7 +198,7 @@ export class GameStore {
     this.lifeLessons.update((prev) => prev + earnedLessons);
   }
 
-  startAutomationLoop(intervalMs = 50): void {
+  public startAutomationLoop(intervalMs = 50): void {
     if (this.automationInterval) return;
 
     let lastTick = Date.now();
@@ -232,11 +232,11 @@ export class GameStore {
     }, intervalMs);
   }
 
-  hasEnoughMoney(cost: BigNum): boolean {
+  public hasEnoughMoney(cost: BigNum): boolean {
     return BigNum.compare(this.money(), cost) >= 0;
   }
 
-  levelUpBulk(pastryId: number, count: number): void {
+  public levelUpBulk(pastryId: number, count: number): void {
     this.pastries.update((list) =>
       list.map((p) => {
         if (p.id !== pastryId) return p;

@@ -16,6 +16,13 @@ export type Pastry = {
   automation: boolean; // true if this pastry auto-builds
 };
 
+// Pastry upgrades formula
+// hire * 10
+// hire * 25
+// hire * 40
+// hire * 80
+// hire * 100
+
 export enum PastryUpgradeType {
   SellMultiplier = 'sellMultiplier',
   SpeedMultiplier = 'speedMultiplier',
