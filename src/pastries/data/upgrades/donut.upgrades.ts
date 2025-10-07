@@ -28,9 +28,9 @@ export const DONUT_UPGRADES: PastryUpgrade[] = [
     id: 403,
     name: 'Hyper Mixer',
     description:
-      'An upgraded mixer speeds up all baking. Global speed of all pastries increased +15% !',
+      'An upgraded mixer speeds up all baking. Global speed of all pastries increased +50% !',
     type: PastryUpgradeType.GlobalSpeedMultiplier,
-    value: 1.15,
+    value: 1.5,
     cost: new BigNum(40, 3),
     purchased: false,
     levelRequirement: 50,
@@ -39,9 +39,9 @@ export const DONUT_UPGRADES: PastryUpgrade[] = [
     id: 404,
     name: 'Sweet Marketing Campaign',
     description:
-      'Promote pastries far and wide. Global sell multiplier increased by 25%!',
+      'Promote pastries far and wide. Global sell multiplier increased by 50%!',
     type: PastryUpgradeType.GlobalSellMultiplier,
-    value: 1.25,
+    value: 1.50,
     cost: new BigNum(80, 3),
     purchased: false,
     levelRequirement: 75,

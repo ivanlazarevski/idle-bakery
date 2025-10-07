@@ -6,9 +6,9 @@ export const CHEESE_PUFF_UPGRADES: PastryUpgrade[] = [
     id: 601,
     name: 'Cheddar Boost',
     description:
-      'Enhance the flavor with aged cheddar. +25% to Cheese Puff sell price!',
+      'Enhance the flavor with aged cheddar. +100% to Cheese Puff sell price!',
     type: PastryUpgradeType.SellMultiplier,
-    value: 1.25,
+    value: 2,
     cost: new BigNum(1000, 3), // 100k * 10
     purchased: false,
     levelRequirement: 10,
@@ -17,9 +17,9 @@ export const CHEESE_PUFF_UPGRADES: PastryUpgrade[] = [
     id: 602,
     name: 'Gourmet Cheese Mix',
     description:
-      'A luxurious blend of cheeses raises the value of each Cheese Puff. +50% sell price!',
+      'A luxurious blend of cheeses raises the value of each Cheese Puff. +100% sell price!',
     type: PastryUpgradeType.SellMultiplier,
-    value: 1.5,
+    value: 2,
     cost: new BigNum(2.5, 4), // 100k * 25 = 2,500k
     purchased: false,
     levelRequirement: 25,

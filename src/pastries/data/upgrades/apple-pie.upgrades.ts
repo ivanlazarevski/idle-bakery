@@ -1,0 +1,55 @@
+import { PastryUpgrade, PastryUpgradeType } from '@pastries/data/pastry.type';
+import { BigNum } from '@pastries/data/bignum.util';
+
+export const APPLE_PIE_UPGRADES: PastryUpgrade[] = [
+  {
+    id: 1301,
+    name: "Cinnamon Sugar Glaze",
+    description: "A sweet sprinkle of cinnamon and sugar draws in every passerby. Apple Pies now sell for double the price!",
+    type: PastryUpgradeType.SellMultiplier,
+    value: 2,
+    cost: new BigNum(6.5, 10),
+    purchased: false,
+    levelRequirement: 10,
+  },
+  {
+    id: 1302,
+    name: "Grandma’s Secret Filling",
+    description: "A secret blend of spiced apples makes customers swoon. Sale price increased by 150%.",
+    type: PastryUpgradeType.SellMultiplier,
+    value: 2.5,
+    cost: new BigNum(2.6, 11),
+    purchased: false,
+    levelRequirement: 25,
+  },
+  {
+    id: 1303,
+    name: "Golden Lattice Perfection",
+    description: "The perfect golden crust glistens in the morning light. Sale price increased by 200%.",
+    type: PastryUpgradeType.SellMultiplier,
+    value: 3,
+    cost: new BigNum(6.5, 11),
+    purchased: false,
+    levelRequirement: 50,
+  },
+  {
+    id: 1304,
+    name: "Oven Efficiency Overhaul",
+    description: "Your ovens hum in perfect harmony. Global baking speed increased by 50%.",
+    type: PastryUpgradeType.GlobalSpeedMultiplier,
+    value: 1.5,
+    cost: new BigNum(1.3, 12),
+    purchased: false,
+    levelRequirement: 75,
+  },
+  {
+    id: 1305,
+    name: "Automated Pastry Conveyor",
+    description: "A network of self-feeding conveyors now handles your pie production automatically.",
+    type: PastryUpgradeType.Automation,
+    value: 1,
+    cost: new BigNum(2.6, 12),
+    purchased: false,
+    levelRequirement: 100,
+  },
+];

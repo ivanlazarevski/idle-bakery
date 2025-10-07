@@ -10,6 +10,12 @@ import { SCONE_UPGRADES } from '@pastries/data/upgrades/scone.upgrades';
 import { DANISH_PASTRY_UPGRADES } from '@pastries/data/upgrades/danish-pastry.upgrades';
 import { ECLAIR_UPGRADES } from '@pastries/data/upgrades/eclair.upgrades';
 import { CINNAMON_ROLL_UPGRADES } from '@pastries/data/upgrades/cinnamon-roll.upgrades';
+import { TART_UPGRADES } from '@pastries/data/upgrades/tart.upgrades';
+import { CHEESECAKE_UPGRADES } from '@pastries/data/upgrades/cheesecake.upgrades';
+import { APPLE_PIE_UPGRADES } from '@pastries/data/upgrades/apple-pie.upgrades';
+import { CHOCOLATE_CAKE_UPGRADES } from '@pastries/data/upgrades/chocolate-cake.upgrades';
+import { DUMPLINGS_UPGRADES } from '@pastries/data/upgrades/dumplings.upgrades';
+import { GARLIC_BREAD_UPGRADES } from '@pastries/data/upgrades/garlic-bread.upgrades';
 
 export const PASTRIES: Pastry[] = [
   {
@@ -169,7 +175,7 @@ export const PASTRIES: Pastry[] = [
     rank: 11,
     level: 0,
     baseBuildTime: 8000,
-    upgrades: [],
+    upgrades: TART_UPGRADES,
     baseRevenue: new BigNum(2, 4),
     baseCost: new BigNum(100, 6), // 100M
     costMultiplier: 1.12,
@@ -184,7 +190,7 @@ export const PASTRIES: Pastry[] = [
     rank: 12,
     level: 0,
     baseBuildTime: 9000,
-    upgrades: [],
+    upgrades: CHEESECAKE_UPGRADES,
     baseRevenue: new BigNum(5, 4),
     baseCost: new BigNum(800, 6), // 800M
     costMultiplier: 1.13,
@@ -199,9 +205,9 @@ export const PASTRIES: Pastry[] = [
     rank: 13,
     level: 0,
     baseBuildTime: 10000,
-    upgrades: [],
+    upgrades: APPLE_PIE_UPGRADES,
     baseRevenue: new BigNum(12, 4),
-    baseCost: new BigNum(6.5, 9), // 1B
+    baseCost: new BigNum(6.5, 9),
     costMultiplier: 1.13,
     sellMultiplier: 1,
     speedMultiplier: 1,
@@ -214,7 +220,7 @@ export const PASTRIES: Pastry[] = [
     rank: 14,
     level: 0,
     baseBuildTime: 12000,
-    upgrades: [],
+    upgrades: CHOCOLATE_CAKE_UPGRADES,
     baseRevenue: new BigNum(4, 5),
     baseCost: new BigNum(50, 9), // 50B
     costMultiplier: 1.14,
@@ -229,7 +235,7 @@ export const PASTRIES: Pastry[] = [
     rank: 15,
     level: 0,
     baseBuildTime: 14000,
-    upgrades: [],
+    upgrades: DUMPLINGS_UPGRADES,
     baseRevenue: new BigNum(8, 5),
     baseCost: new BigNum(450, 9), // 450B
     costMultiplier: 1.14,
@@ -244,7 +250,7 @@ export const PASTRIES: Pastry[] = [
     rank: 16,
     level: 0,
     baseBuildTime: 16000,
-    upgrades: [],
+    upgrades: GARLIC_BREAD_UPGRADES,
     baseRevenue: new BigNum(3.5, 6),
     baseCost: new BigNum(4, 12), // 120B
     costMultiplier: 1.15,
