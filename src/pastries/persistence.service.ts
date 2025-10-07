@@ -16,6 +16,7 @@ export class PersistenceService {
         lifeLessons: store.lifeLessons(),
         globalSellMultiplier: store.globalSellMultiplier(),
         globalSpeedMultiplier: store.globalSpeedMultiplier(),
+        bonusLifeLessons: store.bonusLifeLessons(),
         pastries: store.pastries().map((p) => ({
           id: p.id,
           level: p.level,
@@ -50,6 +51,10 @@ export class PersistenceService {
       if (parsed?.globalSpeedMultiplier != null) {
         store.globalSpeedMultiplier.set(parsed.globalSpeedMultiplier);
       }
+      if (parsed?.bonusLifeLessons != null) {
+        store.bonusLifeLessons.set(parsed.bonusLifeLessons);
+      }
+
 
       // Restore life lessons
       if (parsed?.lifeLessons != null && !isNaN(Number(parsed.lifeLessons))) {
@@ -122,6 +127,7 @@ export class PersistenceService {
     // Reset global multipliers
     store.globalSellMultiplier.set(1);
     store.globalSpeedMultiplier.set(1);
+    store.bonusLifeLessons.set(0);
 
     // Reset pastries
     store.pastries.update((list) =>

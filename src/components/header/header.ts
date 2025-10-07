@@ -23,19 +23,17 @@ import { NgTemplateOutlet } from '@angular/common';
   styleUrl: './header.scss',
 })
 export class Header {
-  public store = inject(GameStore);
-  public musicService = inject(MusicService);
+  private store = inject(GameStore);
+  private musicService = inject(MusicService);
 
   public money = this.store.money;
+  public lifeLessonsFactor = this.store.lifeLessonsFactor;
+  public lifeLessonsMultiplier = this.store.lifeLessonsMultiplier;
   readonly dialog = inject(MatDialog);
   public musicPlaying = this.musicService.musicEnabled;
-  public totalPastryLevels = this.store.totalPastryLevels;
   public lifeLessons = this.store.lifeLessons;
   public sfxEnabled = this.musicService.sfxEnabled;
-  public potentialLifeLessons = computed(() => {
-    return Math.floor(this.totalPastryLevels() / 100);
-  });
-
+  public potentialLifeLessons = this.store.potentialLifeLessons;
   public clearStorage(): void {
     this.store.clearSave();
   }

@@ -29,6 +29,7 @@ export enum PastryUpgradeType {
   Automation = 'automation',
   GlobalSellMultiplier = 'globalSellMultiplier',
   GlobalSpeedMultiplier = 'globalSpeedMultiplier',
+  LifeLessonBonus = 'lifeLessonBonus',
 }
 
 export type PastryUpgrade = {

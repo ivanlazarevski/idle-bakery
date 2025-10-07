@@ -4,13 +4,14 @@
     <div class="ascension hidden md:block">
       <p
         class="ascension-value"
-        matTooltip="Each life lesson increases the global sell value by +10%"
+        matTooltip="Each life lesson increases the global sell value by {{lifeLessonsMultiplier * 100}}%"
       >
         +{{ lifeLessons() }} Life Lessons
       </p>
       <p class="ascension-potential">
         Your oldest child will gain {{ potentialLifeLessons() }} life lessons if
-        you retire now.
+        you retire now. 1 for every {{ lifeLessonsFactor }} pastry levels in
+        total.
       </p>
     </div>
     <div class="md:hidden block">
@@ -25,17 +26,15 @@
     <button matMiniFab (click)="toggleAudio()" matTooltip="Toggle SFX!">
       @if (sfxEnabled()) {
         <mat-icon>volume_up</mat-icon>
-      } @else {
-        <mat-icon>volume_off</mat-icon>
-      }
+      }@else {
+        <mat-icon>volume_off</mat-icon> }
     </button>
 
     <button matButton="elevated" color="accent" (click)="toggleMusic()">
       @if (musicPlaying()) {
         <mat-icon>music_note</mat-icon>
-      } @else {
-        <mat-icon>music_off</mat-icon>
-      }
+      }@else {
+        <mat-icon>music_off</mat-icon> }
       Toggle Music
     </button>
 

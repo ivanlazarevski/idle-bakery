@@ -24,30 +24,33 @@ export class GameStore {
   private musicService = inject(MusicService);
   private persistenceService = inject(PersistenceService);
 
-  money = signal(new BigNum(0, 0));
-  pastries = signal<Pastry[]>([]);
+  public money = signal(new BigNum(0, 0));
+  public pastries = signal<Pastry[]>([]);
+  public bonusLifeLessons = signal(0);
 
-  totalPastryLevels = computed(() =>
+  public totalPastryLevels = computed(() =>
     this.pastries().reduce((sum, p) => sum + p.level, 0),
   );
-
-  pastriesSoldMap = signal<Map<number, number>>(new Map());
-
-  totalPastriesSold = computed(() => {
+  public pastriesSoldMap = signal<Map<number, number>>(new Map());
+  public totalPastriesSold = computed(() => {
     let total = 0;
     for (const [key, value] of this.pastriesSoldMap()) {
       total += value;
     }
     return total;
   });
+  public potentialLifeLessons = computed(() => {
+    return Math.floor(this.totalPastryLevels() / this.lifeLessonsFactor) + this.bonusLifeLessons();
+  });
 
-  public readonly lifeLessonsFactor = 500;
-  lifeLessons = signal(0);
-  globalSellMultiplier = signal(1);
-  globalSpeedMultiplier = signal(1);
+  public readonly lifeLessonsFactor = 250;
+  public readonly lifeLessonsMultiplier = 0.1;
+  public lifeLessons = signal(0);
+  public globalSellMultiplier = signal(1);
+  public globalSpeedMultiplier = signal(1);
 
   private automationInterval: any = null;
-  pastryProgress = new Map<number, WritableSignal<number>>();
+  public pastryProgress = new Map<number, WritableSignal<number>>();
 
   constructor() {
     // initialize pastries as clones of the base data (so we don't mutate the original)
@@ -147,6 +150,10 @@ export class GameStore {
           this.globalSpeedMultiplier() * upgrade.value,
         );
         break;
+      case PastryUpgradeType.LifeLessonBonus:
+        this.bonusLifeLessons.update((prev) => prev + upgrade.value);
+        break;
+
     }
 
     this.musicService.playSfxSound(Sfx.UPGRADE);
@@ -180,8 +187,8 @@ export class GameStore {
       new BigNum(this.globalSellMultiplier(), 0),
     );
 
-    // apply prestige multiplier: +1% per life lesson
-    const prestigeMultiplier = 1 + this.lifeLessons() * 0.1;
+    // apply prestige multiplier: +10% per life lesson
+    const prestigeMultiplier = 1 + this.lifeLessons() * this.lifeLessonsMultiplier;
     return BigNum.multiply(
       withGlobalMultiplier,
       new BigNum(prestigeMultiplier, 0),
@@ -193,8 +200,8 @@ export class GameStore {
   }
 
   public updateLifeLessons(): void {
-    // Earn 1 life lesson per 100 levels
-    const earnedLessons = Math.floor(this.totalPastryLevels() / 100);
+    // Earn 1 life lesson per 500 levels
+    const earnedLessons = Math.floor(this.totalPastryLevels() / this.lifeLessonsFactor) + this.bonusLifeLessons();
     this.lifeLessons.update((prev) => prev + earnedLessons);
   }
 

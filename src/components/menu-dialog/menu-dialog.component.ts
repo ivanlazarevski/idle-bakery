@@ -18,11 +18,8 @@ export class MenuDialogComponent {
   readonly dialog = inject(MatDialog);
 
   public musicPlaying = this.musicService.musicEnabled;
-  public totalPastryLevels = this.store.totalPastryLevels;
   public sfxEnabled = this.musicService.sfxEnabled;
-  public potentialLifeLessons = computed(() => {
-    return Math.floor(this.totalPastryLevels() / 100);
-  });
+  public potentialLifeLessons = this.store.potentialLifeLessons;
 
   public toggleMusic(): void {
     this.musicService.toggleMusic();
