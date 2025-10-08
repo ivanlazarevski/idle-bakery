@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { GameStore } from '@pastries/game.store';
 import { BigNum } from '@pastries/data/bignum.util';
 import { Pastry, PastryUpgradeType } from '@pastries/data/pastry.type';
@@ -17,6 +17,7 @@ export class PersistenceService {
         globalSellMultiplier: store.globalSellMultiplier(),
         globalSpeedMultiplier: store.globalSpeedMultiplier(),
         bonusLifeLessons: store.bonusLifeLessons(),
+        lifeLessonsBoost: store.lifeLessonsBoost(),
         pastries: store.pastries().map((p) => ({
           id: p.id,
           level: p.level,
@@ -54,7 +55,9 @@ export class PersistenceService {
       if (parsed?.bonusLifeLessons != null) {
         store.bonusLifeLessons.set(parsed.bonusLifeLessons);
       }
-
+      if (parsed?.lifeLessonsBoost != null) {
+        store.lifeLessonsBoost.set(parsed.lifeLessonsBoost);
+      }
 
       // Restore life lessons
       if (parsed?.lifeLessons != null && !isNaN(Number(parsed.lifeLessons))) {
@@ -100,7 +103,8 @@ export class PersistenceService {
               if (u.purchased) {
                 if (
                   u.type !== PastryUpgradeType.GlobalSellMultiplier &&
-                  u.type !== PastryUpgradeType.GlobalSpeedMultiplier
+                  u.type !== PastryUpgradeType.GlobalSpeedMultiplier &&
+                  u.type !== PastryUpgradeType.LifeLessonBoost
                 ) {
                   merged = store.applyUpgrade(merged, u);
                 }
@@ -128,6 +132,7 @@ export class PersistenceService {
     store.globalSellMultiplier.set(1);
     store.globalSpeedMultiplier.set(1);
     store.bonusLifeLessons.set(0);
+    store.lifeLessonsBoost.set(0);
 
     // Reset pastries
     store.pastries.update((list) =>
@@ -141,7 +146,7 @@ export class PersistenceService {
         // Reset core properties
         const resetPastry: Pastry = {
           ...p,
-          level: p.id === 1 ? 1 : 0, // unlock first pastry by default
+          level: p.id === 1 ? 1 : 0, // unlock the first pastry by default
           sellMultiplier: 1,
           speedMultiplier: 1,
           automation: false,

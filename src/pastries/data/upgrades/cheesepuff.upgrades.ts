@@ -28,9 +28,9 @@ export const CHEESE_PUFF_UPGRADES: PastryUpgrade[] = [
     id: 603,
     name: 'Secret Cheese Recipe',
     description:
-      'A mysterious secret recipe doubles the Cheese Puff’s appeal! +100% sell price!',
-    type: PastryUpgradeType.SellMultiplier,
-    value: 2,
+      'A mysterious secret recipe from an ancestor! +1% to life lessons!',
+    type: PastryUpgradeType.LifeLessonBoost,
+    value: 0.01,
     cost: new BigNum(4, 4), // 100k * 40 = 4,000k
     purchased: false,
     levelRequirement: 50,

@@ -28,7 +28,9 @@ export class Header {
 
   public money = this.store.money;
   public lifeLessonsFactor = this.store.lifeLessonsFactor;
-  public lifeLessonsMultiplier = this.store.lifeLessonsMultiplier;
+  public lifeLessonsMultiplier = computed(() => {
+    return this.store.lifeLessonsMultiplier + this.store.lifeLessonsBoost()
+  });
   readonly dialog = inject(MatDialog);
   public musicPlaying = this.musicService.musicEnabled;
   public lifeLessons = this.store.lifeLessons;

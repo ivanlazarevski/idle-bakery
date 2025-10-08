@@ -39,9 +39,9 @@ export const TART_UPGRADES: PastryUpgrade[] = [
     id: 1104,
     name: 'Aroma of Luxury',
     description:
-      'The sweet scent of your Tarts fills the entire town, drawing in buyers and raising all pastry sales by 50%.',
-    type: PastryUpgradeType.GlobalSellMultiplier,
-    value: 1.5,
+      'The sweet scent of your Tarts fills the entire town, drawing in buyers and raises the life lesson bonus by 1%.',
+    type: PastryUpgradeType.LifeLessonBoost,
+    value: 0.01,
     cost: new BigNum(8, 8), // 100M * 80 = 8B
     purchased: false,
     levelRequirement: 75,

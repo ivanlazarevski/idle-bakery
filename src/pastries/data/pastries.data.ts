@@ -16,6 +16,8 @@ import { APPLE_PIE_UPGRADES } from '@pastries/data/upgrades/apple-pie.upgrades';
 import { CHOCOLATE_CAKE_UPGRADES } from '@pastries/data/upgrades/chocolate-cake.upgrades';
 import { DUMPLINGS_UPGRADES } from '@pastries/data/upgrades/dumplings.upgrades';
 import { GARLIC_BREAD_UPGRADES } from '@pastries/data/upgrades/garlic-bread.upgrades';
+import { FRUIT_CAKE_UPGRADES } from '@pastries/data/upgrades/fruit-cake.upgrades';
+import { LEMON_PIE_UPGRADES } from '@pastries/data/upgrades/lemon-pie.upgrades';
 
 export const PASTRIES: Pastry[] = [
   {
@@ -265,7 +267,7 @@ export const PASTRIES: Pastry[] = [
     rank: 17,
     level: 0,
     baseBuildTime: 18000,
-    upgrades: [],
+    upgrades: LEMON_PIE_UPGRADES,
     baseRevenue: new BigNum(5.5, 6),
     baseCost: new BigNum(36, 12), // 36T
     costMultiplier: 1.15,
@@ -280,7 +282,7 @@ export const PASTRIES: Pastry[] = [
     rank: 18,
     level: 0,
     baseBuildTime: 20000,
-    upgrades: [],
+    upgrades: FRUIT_CAKE_UPGRADES,
     baseRevenue: new BigNum(1.5, 7),
     baseCost: new BigNum(300, 12),
     costMultiplier: 1.16,

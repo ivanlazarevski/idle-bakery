@@ -1,17 +1,6 @@
-import {
-  computed,
-  effect,
-  inject,
-  Injectable,
-  signal,
-  WritableSignal,
-} from '@angular/core';
+import { computed, effect, inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { BigNum } from '@pastries/data/bignum.util';
-import {
-  Pastry,
-  PastryUpgrade,
-  PastryUpgradeType,
-} from '@pastries/data/pastry.type';
+import { Pastry, PastryUpgrade, PastryUpgradeType } from '@pastries/data/pastry.type';
 import { PASTRIES } from '@pastries/data/pastries.data';
 import { MusicService } from '../music/music.service';
 import { Sfx } from '../music/sfx.enum';
@@ -27,6 +16,10 @@ export class GameStore {
   public money = signal(new BigNum(0, 0));
   public pastries = signal<Pastry[]>([]);
   public bonusLifeLessons = signal(0);
+  public lifeLessons = signal(0);
+  public globalSellMultiplier = signal(1);
+  public globalSpeedMultiplier = signal(1);
+  public lifeLessonsBoost = signal(0);
 
   public totalPastryLevels = computed(() =>
     this.pastries().reduce((sum, p) => sum + p.level, 0),
@@ -45,10 +38,6 @@ export class GameStore {
 
   public readonly lifeLessonsFactor = 250;
   public readonly lifeLessonsMultiplier = 0.1;
-  public lifeLessons = signal(0);
-  public globalSellMultiplier = signal(1);
-  public globalSpeedMultiplier = signal(1);
-
   private automationInterval: any = null;
   public pastryProgress = new Map<number, WritableSignal<number>>();
 
@@ -150,6 +139,10 @@ export class GameStore {
           this.globalSpeedMultiplier() * upgrade.value,
         );
         break;
+      case PastryUpgradeType.LifeLessonBoost:
+        console.log('ASD!@#');
+        this.lifeLessonsBoost.set(this.lifeLessonsBoost() + upgrade.value);
+        break;
       case PastryUpgradeType.LifeLessonBonus:
         this.bonusLifeLessons.update((prev) => prev + upgrade.value);
         break;
@@ -188,7 +181,7 @@ export class GameStore {
     );
 
     // apply prestige multiplier: +10% per life lesson
-    const prestigeMultiplier = 1 + this.lifeLessons() * this.lifeLessonsMultiplier;
+    const prestigeMultiplier = 1 + this.lifeLessons() * (this.lifeLessonsMultiplier + this.lifeLessonsBoost());
     return BigNum.multiply(
       withGlobalMultiplier,
       new BigNum(prestigeMultiplier, 0),
