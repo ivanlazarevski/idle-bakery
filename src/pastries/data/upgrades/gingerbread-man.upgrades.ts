@@ -1,0 +1,55 @@
+import { PastryUpgrade, PastryUpgradeType } from '@pastries/data/pastry.type';
+import { BigNum } from '@pastries/data/bignum.util';
+
+export const GINGERBREAD_MAN_UPGRADES: PastryUpgrade[] = [
+  {
+    id: 2101,
+    name: 'Spiced Sugar Glaze',
+    description: 'A warm sugar glaze boosts demand. Gingerbread Man sells for +100% more!',
+    type: PastryUpgradeType.SellMultiplier,
+    value: 2,
+    cost: new BigNum(3.2, 16),
+    purchased: false,
+    levelRequirement: 10,
+  },
+  {
+    id: 2102,
+    name: 'Caramel Buttons',
+    description: 'Caramel decorations double the price again. +100% Gingerbread Man sell value!',
+    type: PastryUpgradeType.SellMultiplier,
+    value: 2,
+    cost: new BigNum(6.4, 16),
+    purchased: false,
+    levelRequirement: 25,
+  },
+  {
+    id: 2103,
+    name: 'Festive Icing Patterns',
+    description: 'Colorful icing patterns boost sales. +100% Gingerbread Man sell price!',
+    type: PastryUpgradeType.SellMultiplier,
+    value: 2,
+    cost: new BigNum(1.12, 17),
+    purchased: false,
+    levelRequirement: 50,
+  },
+  {
+    id: 2104,
+    name: 'Holiday Rush',
+    description: 'The holiday rush speeds everything up. Gingerbread Man production is twice as fast!',
+    type: PastryUpgradeType.SpeedMultiplier,
+    value: 2,
+    cost: new BigNum(1.92, 17),
+    purchased: false,
+    levelRequirement: 75,
+  },
+  {
+    id: 2105,
+    name: 'Automated Icing Conveyor',
+    description: 'A conveyor system ices cookies automatically. Gingerbread Man is now automated!',
+    type: PastryUpgradeType.Automation,
+    value: 1,
+    cost: new BigNum(3.2, 17),
+    purchased: false,
+    levelRequirement: 100,
+  },
+];

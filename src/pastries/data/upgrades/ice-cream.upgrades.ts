@@ -1,0 +1,55 @@
+import { PastryUpgrade, PastryUpgradeType } from '@pastries/data/pastry.type';
+import { BigNum } from '@pastries/data/bignum.util';
+
+export const ICE_CREAM_UPGRADES: PastryUpgrade[] = [
+  {
+    id: 2201,
+    name: 'Double Scoop Deal',
+    description: 'A second scoop for every cone. Ice Cream sells for +100% more!',
+    type: PastryUpgradeType.SellMultiplier,
+    value: 2,
+    cost: new BigNum(1.2, 19),
+    purchased: false,
+    levelRequirement: 10,
+  },
+  {
+    id: 2202,
+    name: 'Premium Waffle Cones',
+    description: 'Fancy waffle cones boost the price. another +100% Ice Cream sell value!',
+    type: PastryUpgradeType.SellMultiplier,
+    value: 2,
+    cost: new BigNum(2.4, 19),
+    purchased: false,
+    levelRequirement: 25,
+  },
+  {
+    id: 2203,
+    name: 'Sweet Reflection',
+    description: 'Enjoying Ice Cream inspires reflection. Life Lessons Boost increased by +1%!',
+    type: PastryUpgradeType.LifeLessonBoost,
+    value: 1,
+    cost: new BigNum(4.8, 19),
+    purchased: false,
+    levelRequirement: 50,
+  },
+  {
+    id: 2204,
+    name: 'Summer Sales Frenzy',
+    description: 'Peak summer demand affects all pastries. Global sell price increases by +50%!',
+    type: PastryUpgradeType.GlobalSellMultiplier,
+    value: 1.5,
+    cost: new BigNum(8.4, 19),
+    purchased: false,
+    levelRequirement: 75,
+  },
+  {
+    id: 2205,
+    name: 'Cryo-Serve Dispenser',
+    description: 'Automated dispenser keeps Ice Cream flowing non-stop. Automation unlocked!',
+    type: PastryUpgradeType.Automation,
+    value: 1,
+    cost: new BigNum(1.2, 20),
+    purchased: false,
+    levelRequirement: 100,
+  },
+];

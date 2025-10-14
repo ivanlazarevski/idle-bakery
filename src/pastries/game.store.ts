@@ -1,10 +1,23 @@
-import { computed, effect, inject, Injectable, signal, WritableSignal } from '@angular/core';
+import {
+  computed,
+  effect,
+  inject,
+  Injectable,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { BigNum } from '@pastries/data/bignum.util';
-import { Pastry, PastryUpgrade, PastryUpgradeType } from '@pastries/data/pastry.type';
+import {
+  CritEvent, CritResult,
+  Pastry,
+  PastryUpgrade,
+  PastryUpgradeType
+} from '@pastries/data/pastry.type';
 import { PASTRIES } from '@pastries/data/pastries.data';
 import { MusicService } from '../music/music.service';
 import { Sfx } from '../music/sfx.enum';
 import { PersistenceService } from '@pastries/persistence.service';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,14 +26,26 @@ export class GameStore {
   private musicService = inject(MusicService);
   private persistenceService = inject(PersistenceService);
 
+  public readonly lifeLessonsFactor = 250;
+  public readonly lifeLessonsMultiplier = 0.1;
+  private automationInterval: any = null;
+  public pastryProgress = new Map<number, WritableSignal<number>>();
+  public readonly baseCriticalChance = 0.1; // Base is 10%
+  public readonly baseCriticalMultiplier = 1.5; // Base is 150%
+  public baseGlobalSellMultiplier = 1;
+  public baseGlobalSpeedMultiplier = 1;
+
+  public critEvents$ = new Subject<CritEvent>();
+
   public money = signal(new BigNum(0, 0));
   public pastries = signal<Pastry[]>([]);
   public bonusLifeLessons = signal(0);
   public lifeLessons = signal(0);
-  public globalSellMultiplier = signal(1);
-  public globalSpeedMultiplier = signal(1);
+  public globalSellMultiplier = signal(this.baseGlobalSellMultiplier);
+  public globalSpeedMultiplier = signal(this.baseGlobalSpeedMultiplier);
   public lifeLessonsBoost = signal(0);
-
+  public criticalChance = signal(this.baseCriticalChance);
+  public criticalMultiplier = signal(this.baseCriticalMultiplier);
   public totalPastryLevels = computed(() =>
     this.pastries().reduce((sum, p) => sum + p.level, 0),
   );
@@ -33,13 +58,11 @@ export class GameStore {
     return total;
   });
   public potentialLifeLessons = computed(() => {
-    return Math.floor(this.totalPastryLevels() / this.lifeLessonsFactor) + this.bonusLifeLessons();
+    return (
+      Math.floor(this.totalPastryLevels() / this.lifeLessonsFactor) +
+      this.bonusLifeLessons()
+    );
   });
-
-  public readonly lifeLessonsFactor = 250;
-  public readonly lifeLessonsMultiplier = 0.1;
-  private automationInterval: any = null;
-  public pastryProgress = new Map<number, WritableSignal<number>>();
 
   constructor() {
     // initialize pastries as clones of the base data (so we don't mutate the original)
@@ -140,13 +163,17 @@ export class GameStore {
         );
         break;
       case PastryUpgradeType.LifeLessonBoost:
-        console.log('ASD!@#');
         this.lifeLessonsBoost.set(this.lifeLessonsBoost() + upgrade.value);
         break;
       case PastryUpgradeType.LifeLessonBonus:
         this.bonusLifeLessons.update((prev) => prev + upgrade.value);
         break;
-
+      case PastryUpgradeType.CriticalChanceIncrease:
+        this.criticalChance.set(this.criticalChance() + upgrade.value);
+        break;
+      case PastryUpgradeType.CriticalMultiplierIncrease:
+        this.criticalMultiplier.set(this.criticalMultiplier() + upgrade.value);
+        break;
     }
 
     this.musicService.playSfxSound(Sfx.UPGRADE);
@@ -160,18 +187,21 @@ export class GameStore {
     return BigNum.multiply(p.baseCost, new BigNum(multiplierPow, 0));
   }
 
-  public getEarnings(p: Pastry): BigNum {
-    if (p.level === 0) {
+  public getEarnings(pastry: Pastry): BigNum {
+    if (pastry.level === 0) {
       return new BigNum(0, 0);
     }
 
     // base revenue * level
-    const base = BigNum.multiply(p.baseRevenue, new BigNum(p.level, 0));
+    const base = BigNum.multiply(
+      pastry.baseRevenue,
+      new BigNum(pastry.level, 0),
+    );
 
     // apply pastry-specific multiplier
     const withPastryMultiplier = BigNum.multiply(
       base,
-      new BigNum(p.sellMultiplier ?? 1, 0),
+      new BigNum(pastry.sellMultiplier ?? 1, 0),
     );
 
     // apply global sell multiplier
@@ -181,7 +211,10 @@ export class GameStore {
     );
 
     // apply prestige multiplier: +10% per life lesson
-    const prestigeMultiplier = 1 + this.lifeLessons() * (this.lifeLessonsMultiplier + this.lifeLessonsBoost());
+    const prestigeMultiplier =
+      1 +
+      this.lifeLessons() *
+        (this.lifeLessonsMultiplier + this.lifeLessonsBoost());
     return BigNum.multiply(
       withGlobalMultiplier,
       new BigNum(prestigeMultiplier, 0),
@@ -194,8 +227,22 @@ export class GameStore {
 
   public updateLifeLessons(): void {
     // Earn 1 life lesson per 500 levels
-    const earnedLessons = Math.floor(this.totalPastryLevels() / this.lifeLessonsFactor) + this.bonusLifeLessons();
+    const earnedLessons =
+      Math.floor(this.totalPastryLevels() / this.lifeLessonsFactor) +
+      this.bonusLifeLessons();
     this.lifeLessons.update((prev) => prev + earnedLessons);
+  }
+
+  public applyCrit(base: BigNum, pastry: Pastry): CritResult {
+    const chance = this.criticalChance();
+    let didCrit = false;
+    if (Math.random() < chance) {
+      const critValue = BigNum.multiply(base, new BigNum(this.criticalMultiplier(), 0));
+      this.critEvents$.next({ pastry, value: critValue });
+      didCrit = true;
+      return { value: critValue, didCrit };
+    }
+    return { value: base, didCrit };
   }
 
   public startAutomationLoop(intervalMs = 50): void {
@@ -222,8 +269,8 @@ export class GameStore {
 
         let newProgress = progressSignal() + increment;
         while (newProgress >= 100) {
-          const earned = this.getEarnings(p);
-          this.addMoney(earned);
+          let earned = this.applyCrit(this.getEarnings(p), p);
+          this.addMoney(earned.value);
           newProgress -= 100; // subtract instead of reset, handles overflow
         }
 

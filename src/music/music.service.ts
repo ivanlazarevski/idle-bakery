@@ -12,6 +12,7 @@ export class MusicService {
   public buildAudio = '/Audio/Build.wav';
   public upgradeAudio = '/Audio/Upgrade.wav';
   public unlockAudio = '/Audio/Unlock.wav';
+  public critAudio = '/Audio/Crit.wav';
   private sfxAudio: HTMLAudioElement | null = null;
 
   musicEnabled = signal(false);
@@ -45,6 +46,10 @@ export class MusicService {
           break;
         case Sfx.UNLOCK:
           this.sfxAudio.src = this.unlockAudio;
+          this.sfxAudio.play();
+          break;
+        case Sfx.CRIT:
+          this.sfxAudio.src = this.critAudio;
           this.sfxAudio.play();
           break;
       }

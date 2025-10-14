@@ -31,6 +31,8 @@ export enum PastryUpgradeType {
   GlobalSpeedMultiplier = 'globalSpeedMultiplier',
   LifeLessonBonus = 'lifeLessonBonus',
   LifeLessonBoost = 'lifeLessonBoost',
+  CriticalChanceIncrease = 'criticalChanceIncrease',
+  CriticalMultiplierIncrease = 'criticalMultiplierIncrease',
 }
 
 export type PastryUpgrade = {
@@ -43,3 +45,13 @@ export type PastryUpgrade = {
   purchased: boolean; // whether this upgrade has been bought
   levelRequirement: number;
 };
+
+export type CritEvent = {
+  pastry: Pastry,
+  value: BigNum,
+}
+
+export type CritResult = {
+  value: BigNum,
+  didCrit: boolean
+}

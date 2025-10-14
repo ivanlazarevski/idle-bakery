@@ -1,19 +1,6 @@
 <header class="header fixed md:flex md:px-8 px-4">
   <div class="left-panel flex justify-between">
     <div class="title">Idle Bakery</div>
-    <div class="ascension hidden md:block">
-      <p
-        class="ascension-value"
-        matTooltip="Each life lesson increases the global sell value by {{lifeLessonsMultiplier() * 100}}%"
-      >
-        +{{ lifeLessons() }} Life Lessons
-      </p>
-      <p class="ascension-potential">
-        Your oldest child will gain {{ potentialLifeLessons() }} life lessons if
-        you retire now. 1 for every {{ lifeLessonsFactor }} pastry levels in
-        total.
-      </p>
-    </div>
     <div class="md:hidden block">
       <button matMiniFab (click)="toggleMenu()">
         <mat-icon>menu</mat-icon>
@@ -22,12 +9,21 @@
   </div>
   <div class="right-panel md:flex hidden">
     <ng-container *ngTemplateOutlet="moneyRef" />
+    <div id="stats" class="grid grid-cols-4 gap-x-4 gap-y-2">
+      <p>Life Lessons: +{{lifeLessons()}}</p>
+      <p>Life Lessons Multiplier: {{lifeLessonsMultiplier() * 100}}%</p>
+      <p>Potential Life Lessons: +{{potentialLifeLessons()}}</p>
+      <p>Life Lessons Bonus: {{lifeLessons() * lifeLessonsMultiplier() * 100}}%</p>
+      <p>Critical Chance: {{criticalChance() * 100}}%</p>
+      <p>Critical Multiplier: {{criticalMultiplier() * 100}}%</p>
+      <p>Global Sell Multiplier: {{globalSellMultiplier()}}</p>
+      <p>Global Speed Multiplier: {{globalSpeedMultiplier()}}</p>
+    </div>
 
     <button matMiniFab (click)="toggleAudio()" matTooltip="Toggle SFX!">
       @if (sfxEnabled()) {
         <mat-icon>volume_up</mat-icon>
-      }@else {
-        <mat-icon>volume_off</mat-icon> }
+      }@else { <mat-icon>volume_off</mat-icon> }
     </button>
 
     <button matButton="elevated" color="accent" (click)="toggleMusic()">
@@ -56,7 +52,7 @@
 
 <ng-template #moneyRef>
   <div class="money">
-    <img src="/fc131.png" alt="money-icon" class="md:h-16 md:w-16 h-8 w-8" />
+    <img src="/fc131.png" alt="money-icon" class="h-8 w-8" />
     <p class="money-value">{{ money().toSuffixString() }}</p>
   </div>
 </ng-template>

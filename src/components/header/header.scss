@@ -10,7 +10,7 @@
   align-items: center;
   padding: 0 1rem;
   &-value {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: bold;
     color: var(--cBrown-dark);
   }
@@ -46,4 +46,10 @@
   &-potential {
     color: var(--cDark);
   }
+}
+
+#stats {
+  color: var(--cBrown-dark);
+  font-family: var(--font-regular), serif;
+  font-weight: bold;
 }

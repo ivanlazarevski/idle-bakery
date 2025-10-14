@@ -1,0 +1,55 @@
+import { PastryUpgrade, PastryUpgradeType } from '@pastries/data/pastry.type';
+import { BigNum } from '@pastries/data/bignum.util';
+
+export const PANCAKE_UPGRADES: PastryUpgrade[] = [
+  {
+    id: 1901,
+    name: 'Maple Drizzle',
+    description: 'A river of sweet maple syrup. Pancakes sell for +100% more!',
+    type: PastryUpgradeType.SellMultiplier,
+    value: 2,
+    cost: new BigNum(3.2, 16),
+    purchased: false,
+    levelRequirement: 10,
+  },
+  {
+    id: 1902,
+    name: 'Golden Butter Spread',
+    description: 'A perfect buttery glaze. +100% more sell price!',
+    type: PastryUpgradeType.SellMultiplier,
+    value: 2,
+    cost: new BigNum(8, 16),
+    purchased: false,
+    levelRequirement: 25,
+  },
+  {
+    id: 1903,
+    name: 'Fluffy Perfection',
+    description: 'Your Pancakes become legendary. +100% more sell price!',
+    type: PastryUpgradeType.SellMultiplier,
+    value: 2,
+    cost: new BigNum(1.28, 17),
+    purchased: false,
+    levelRequirement: 50,
+  },
+  {
+    id: 1904,
+    name: 'Breakfast Wisdom',
+    description: 'A calm morning leads to reflection. Gain +1 Life Lesson when retiring.',
+    type: PastryUpgradeType.LifeLessonBonus,
+    value: 1,
+    cost: new BigNum(2.56, 17),
+    purchased: false,
+    levelRequirement: 75,
+  },
+  {
+    id: 1905,
+    name: 'Automated Pancake Griddle',
+    description: 'A self-flipping griddle handles Pancakes automatically!',
+    type: PastryUpgradeType.Automation,
+    value: 1,
+    cost: new BigNum(3.2, 17),
+    purchased: false,
+    levelRequirement: 100,
+  },
+];

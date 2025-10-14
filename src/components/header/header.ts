@@ -25,17 +25,23 @@ import { NgTemplateOutlet } from '@angular/common';
 export class Header {
   private store = inject(GameStore);
   private musicService = inject(MusicService);
-
-  public money = this.store.money;
+  readonly dialog = inject(MatDialog);
   public lifeLessonsFactor = this.store.lifeLessonsFactor;
+  public musicPlaying = this.musicService.musicEnabled;
+  public sfxEnabled = this.musicService.sfxEnabled;
+
+  // Stats
+  public money = this.store.money;
+  public potentialLifeLessons = this.store.potentialLifeLessons;
+  public globalSellMultiplier = this.store.globalSellMultiplier;
+  public globalSpeedMultiplier = this.store.globalSpeedMultiplier;
+  public criticalChance = this.store.criticalChance;
+  public criticalMultiplier = this.store.criticalMultiplier;
+  public lifeLessons = this.store.lifeLessons;
   public lifeLessonsMultiplier = computed(() => {
     return this.store.lifeLessonsMultiplier + this.store.lifeLessonsBoost()
   });
-  readonly dialog = inject(MatDialog);
-  public musicPlaying = this.musicService.musicEnabled;
-  public lifeLessons = this.store.lifeLessons;
-  public sfxEnabled = this.musicService.sfxEnabled;
-  public potentialLifeLessons = this.store.potentialLifeLessons;
+
   public clearStorage(): void {
     this.store.clearSave();
   }

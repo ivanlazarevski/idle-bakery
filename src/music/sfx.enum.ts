@@ -1,5 +1,6 @@
 export enum Sfx {
   BUILD,
   UPGRADE,
-  UNLOCK
+  UNLOCK,
+  CRIT
 }
