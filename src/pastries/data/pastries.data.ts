@@ -25,6 +25,11 @@ import { ICE_CREAM_UPGRADES } from '@pastries/data/upgrades/ice-cream.upgrades';
 import { JELLY_UPGRADES } from '@pastries/data/upgrades/jelly.upgrades';
 import { PUDDING_UPGRADES } from '@pastries/data/upgrades/pudding.upgrades';
 import { GALETTE_UPGRADES } from '@pastries/data/upgrades/galette.upgrades';
+import { PIZZA_UPGRADES } from '@pastries/data/upgrades/pizza.upgrades';
+import { BLACK_FOREST_CAKE_UPGRADES } from '@pastries/data/upgrades/black-forest-cake.upgrades';
+import { PAVLOVA_CAKE_UPGRADES } from '@pastries/data/upgrades/pavlova.upgrades';
+import { CROQUEMBOUCHE_UPGRADES } from '@pastries/data/upgrades/croquembouche.upgrades';
+import { WEDDING_CAKE_UPGRADES } from '@pastries/data/upgrades/wedding-cake.upgrades';
 
 export const PASTRIES: Pastry[] = [
   {
@@ -409,7 +414,7 @@ export const PASTRIES: Pastry[] = [
     rank: 26,
     level: 0,
     baseBuildTime: 50000,
-    upgrades: [],
+    upgrades: PIZZA_UPGRADES,
     baseRevenue: new BigNum(20, 9), // 20B
     baseCost: new BigNum(25, 23), // 2.5Sp
     costMultiplier: 1.2,
@@ -424,7 +429,7 @@ export const PASTRIES: Pastry[] = [
     rank: 27,
     level: 0,
     baseBuildTime: 60000,
-    upgrades: [],
+    upgrades: BLACK_FOREST_CAKE_UPGRADES,
     baseRevenue: new BigNum(7.5, 10),
     baseCost: new BigNum(1800, 23), // 180Sp
     costMultiplier: 1.2,
@@ -439,7 +444,7 @@ export const PASTRIES: Pastry[] = [
     rank: 28,
     level: 0,
     baseBuildTime: 70000,
-    upgrades: [],
+    upgrades: PAVLOVA_CAKE_UPGRADES,
     baseRevenue: new BigNum(1.35, 11),
     baseCost: new BigNum(3.4, 27), // 3.4Oc
     costMultiplier: 1.21,
@@ -454,7 +459,7 @@ export const PASTRIES: Pastry[] = [
     rank: 29,
     level: 0,
     baseBuildTime: 80000,
-    upgrades: [],
+    upgrades: CROQUEMBOUCHE_UPGRADES,
     baseRevenue: new BigNum(3.5, 11),
     baseCost: new BigNum(120, 27), // 120Oc
     costMultiplier: 1.21,
@@ -469,7 +474,7 @@ export const PASTRIES: Pastry[] = [
     rank: 30,
     level: 0,
     baseBuildTime: 90000,
-    upgrades: [],
+    upgrades: WEDDING_CAKE_UPGRADES,
     baseRevenue: new BigNum(1, 12), // 1T
     baseCost: new BigNum(250, 30), // 250No
     costMultiplier: 1.22,
