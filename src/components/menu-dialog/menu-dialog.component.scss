@@ -11,4 +11,7 @@
   color: var(--cBrown-dark);
   font-family: var(--font-regular), serif;
   font-weight: bold;
+  border: 2px solid var(--cBrown-dark);
+  padding: 1rem;
+  border-radius: 12px;
 }

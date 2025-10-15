@@ -3,10 +3,10 @@
   <div id="stats">
     <p class="text-xl">Stats</p>
     <p>Life Lessons: +{{ lifeLessons() }}</p>
-    <p>Life Lessons Multiplier: {{ lifeLessonsMultiplier() * 100 }}%</p>
+    <p>Life Lessons Multiplier: {{ (lifeLessonsMultiplier() * 100).toFixed(2) }}%</p>
     <p>Potential Life Lessons: +{{ potentialLifeLessons() }}</p>
     <p>
-      Life Lessons Bonus: {{ lifeLessons() * lifeLessonsMultiplier() * 100 }}%
+      Life Lessons Bonus: {{ (lifeLessons() * lifeLessonsMultiplier() * 100).toFixed(2) }}%
     </p>
     <p>Global Sell Multiplier: {{ globalSellMultiplier().toFixed(2) }}</p>
     <p>Global Speed Multiplier: {{ globalSpeedMultiplier().toFixed(2) }}</p>
