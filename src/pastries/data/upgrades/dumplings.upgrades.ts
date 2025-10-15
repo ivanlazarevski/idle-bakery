@@ -35,9 +35,9 @@ export const DUMPLINGS_UPGRADES: PastryUpgrade[] = [
   {
     id: 1504,
     name: "Global Distribution Chain",
-    description: "Your logistics network speeds up every pastry’s production by 50%.",
-    type: PastryUpgradeType.GlobalSpeedMultiplier,
-    value: 1.5,
+    description: "Your logistics network speeds up. +25% Critical Multiplier increase!",
+    type: PastryUpgradeType.CriticalMultiplierIncrease,
+    value: 0.25,
     cost: new BigNum(9, 11), // ~90B
     purchased: false,
     levelRequirement: 75,

@@ -1,6 +1,10 @@
 <header class="header fixed md:flex md:px-8 px-4">
   <div class="left-panel flex justify-between">
     <div class="title">Idle Bakery</div>
+    <div class="ascension">
+      <p class="ascension-value">+{{lifeLessons()}} Life Lessons</p>
+      <p class="ascension-text">Your oldest child will gain {{potentialLifeLessons()}} if you retire now. You gain 1 potential life lesson for every 250 pastry levels in total.</p>
+    </div>
     <div class="md:hidden block">
       <button matMiniFab (click)="toggleMenu()">
         <mat-icon>menu</mat-icon>
@@ -9,19 +13,6 @@
   </div>
   <div class="right-panel md:flex hidden">
     <ng-container *ngTemplateOutlet="moneyRef" />
-    <div id="stats" class="grid grid-cols-4 gap-x-4 gap-y-2">
-      <p>Life Lessons: +{{ lifeLessons() }}</p>
-      <p>Life Lessons Multiplier: {{ lifeLessonsMultiplier() * 100 }}%</p>
-      <p>Potential Life Lessons: +{{ potentialLifeLessons() }}</p>
-      <p>
-        Life Lessons Bonus: {{ lifeLessons() * lifeLessonsMultiplier() * 100 }}%
-      </p>
-      <p>Critical Chance: {{ criticalChance() * 100 }}%</p>
-      <p>Critical Multiplier: {{ criticalMultiplier() * 100 }}%</p>
-      <p>Global Sell Multiplier: {{ globalSellMultiplier() }}</p>
-      <p>Global Speed Multiplier: {{ globalSpeedMultiplier() }}</p>
-    </div>
-
     <button matMiniFab (click)="toggleAudio()" matTooltip="Toggle SFX!">
       @if (sfxEnabled()) {
         <mat-icon>volume_up</mat-icon>
@@ -48,6 +39,9 @@
       color="primary"
     >
       Retire Now
+    </button>
+    <button matMiniFab (click)="toggleMenu()">
+      <mat-icon>menu</mat-icon>
     </button>
   </div>
   <div class="md:hidden block">

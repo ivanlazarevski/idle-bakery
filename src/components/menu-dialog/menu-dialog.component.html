@@ -1,5 +1,18 @@
 <div class="p-4 flex flex-col gap-4 menu">
   <h2 class="menu-title">Menu</h2>
+  <div id="stats">
+    <p>Life Lessons: +{{ lifeLessons() }}</p>
+    <p>Life Lessons Multiplier: {{ lifeLessonsMultiplier() * 100 }}%</p>
+    <p>Potential Life Lessons: +{{ potentialLifeLessons() }}</p>
+    <p>
+      Life Lessons Bonus: {{ lifeLessons() * lifeLessonsMultiplier() * 100 }}%
+    </p>
+    <p>Critical Chance: {{ criticalChance() * 100 }}%</p>
+    <p>Critical Multiplier: {{ criticalMultiplier() * 100 }}%</p>
+    <p>Global Sell Multiplier: {{ globalSellMultiplier() }}</p>
+    <p>Global Speed Multiplier: {{ globalSpeedMultiplier() }}</p>
+  </div>
+
   <button matButton="elevated" color="accent" (click)="toggleMusic()">
     @if (musicPlaying()) {
       <mat-icon>music_note</mat-icon>

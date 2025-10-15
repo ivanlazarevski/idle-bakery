@@ -25,9 +25,9 @@ export const FRUIT_CAKE_UPGRADES: PastryUpgrade[] = [
   {
     id: 1803,
     name: "Dried Fruit Boost",
-    description: "Infused energy from sun-dried fruits speeds up production globally by 25%.",
-    type: PastryUpgradeType.GlobalSpeedMultiplier,
-    value: 1.25,
+    description: "Infused energy from sun-dried fruits. +5% Critical Chance Increase!",
+    type: PastryUpgradeType.CriticalChanceIncrease,
+    value: 0.05,
     cost: new BigNum(1.5, 14), // ~150T
     purchased: false,
     levelRequirement: 50,

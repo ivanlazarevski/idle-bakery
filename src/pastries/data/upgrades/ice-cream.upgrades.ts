@@ -8,17 +8,17 @@ export const ICE_CREAM_UPGRADES: PastryUpgrade[] = [
     description: 'A second scoop for every cone. Ice Cream sells for +100% more!',
     type: PastryUpgradeType.SellMultiplier,
     value: 2,
-    cost: new BigNum(1.2, 19),
+    cost: new BigNum(1.2, 19), // x10
     purchased: false,
     levelRequirement: 10,
   },
   {
     id: 2202,
     name: 'Premium Waffle Cones',
-    description: 'Fancy waffle cones boost the price. another +100% Ice Cream sell value!',
+    description: 'Fancy waffle cones boost the price. Another +100% Ice Cream sell value!',
     type: PastryUpgradeType.SellMultiplier,
     value: 2,
-    cost: new BigNum(2.4, 19),
+    cost: new BigNum(3, 20), // x25
     purchased: false,
     levelRequirement: 25,
   },
@@ -28,7 +28,7 @@ export const ICE_CREAM_UPGRADES: PastryUpgrade[] = [
     description: 'Enjoying Ice Cream inspires reflection. Life Lessons Boost increased by +1%!',
     type: PastryUpgradeType.LifeLessonBoost,
     value: 1,
-    cost: new BigNum(4.8, 19),
+    cost: new BigNum(4.8, 20), // x40
     purchased: false,
     levelRequirement: 50,
   },
@@ -38,7 +38,7 @@ export const ICE_CREAM_UPGRADES: PastryUpgrade[] = [
     description: 'Peak summer demand affects all pastries. Global sell price increases by +50%!',
     type: PastryUpgradeType.GlobalSellMultiplier,
     value: 1.5,
-    cost: new BigNum(8.4, 19),
+    cost: new BigNum(9.6, 20), // x80
     purchased: false,
     levelRequirement: 75,
   },
@@ -48,7 +48,7 @@ export const ICE_CREAM_UPGRADES: PastryUpgrade[] = [
     description: 'Automated dispenser keeps Ice Cream flowing non-stop. Automation unlocked!',
     type: PastryUpgradeType.Automation,
     value: 1,
-    cost: new BigNum(1.2, 20),
+    cost: new BigNum(1.2, 21), // x100
     purchased: false,
     levelRequirement: 100,
   },

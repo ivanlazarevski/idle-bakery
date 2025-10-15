@@ -41,15 +41,13 @@
     font-size: 2rem;
     font-weight: bold;
     color: var(--cBrown-dark);
+
+    &-text {
+      color: var(--cDark);
+    }
   }
 
   &-potential {
     color: var(--cDark);
   }
-}
-
-#stats {
-  color: var(--cBrown-dark);
-  font-family: var(--font-regular), serif;
-  font-weight: bold;
 }

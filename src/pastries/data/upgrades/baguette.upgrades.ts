@@ -49,9 +49,9 @@ export const BAGUETTE_UPGRADES: PastryUpgrade[] = [
     id: 305,
     name: 'Caraway Seeds',
     description:
-      'Caraway seeds sprinkled on top complete Baguettes. Doubles its sell price!',
-    type: PastryUpgradeType.SellMultiplier,
-    value: 2,
+      'Caraway seeds sprinkled on top complete Baguettes. +5% critical chance!',
+    type: PastryUpgradeType.CriticalChanceIncrease,
+    value: 0.05,
     cost: new BigNum(25, 3),
     purchased: false,
     levelRequirement: 100,

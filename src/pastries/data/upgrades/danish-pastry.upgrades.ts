@@ -35,9 +35,9 @@ export const DANISH_PASTRY_UPGRADES: PastryUpgrade[] = [
   {
     id: 804,
     name: 'Bakery Fame',
-    description: 'Your Danish Pastries earn local fame. Global sell multiplier +25%.',
-    type: PastryUpgradeType.GlobalSellMultiplier,
-    value: 1.25,
+    description: 'Your Danish Pastries earn local fame. Critical multiplier increased by 25%!',
+    type: PastryUpgradeType.CriticalMultiplierIncrease,
+    value: 0.25,
     cost: new BigNum(3.2, 7), // 32.0M
     purchased: false,
     levelRequirement: 75,

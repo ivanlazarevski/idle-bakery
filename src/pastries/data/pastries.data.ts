@@ -22,6 +22,9 @@ import { PANCAKE_UPGRADES } from '@pastries/data/upgrades/pancakes.upgrades';
 import { STRAWBERRY_CAKE_UPGRADES } from '@pastries/data/upgrades/strawberry-cake.upgrades';
 import { GINGERBREAD_MAN_UPGRADES } from '@pastries/data/upgrades/gingerbread-man.upgrades';
 import { ICE_CREAM_UPGRADES } from '@pastries/data/upgrades/ice-cream.upgrades';
+import { JELLY_UPGRADES } from '@pastries/data/upgrades/jelly.upgrades';
+import { PUDDING_UPGRADES } from '@pastries/data/upgrades/pudding.upgrades';
+import { GALETTE_UPGRADES } from '@pastries/data/upgrades/galette.upgrades';
 
 export const PASTRIES: Pastry[] = [
   {
@@ -361,7 +364,7 @@ export const PASTRIES: Pastry[] = [
     rank: 23,
     level: 0,
     baseBuildTime: 35000,
-    upgrades: [],
+    upgrades: JELLY_UPGRADES,
     baseRevenue: new BigNum(1.2, 9), // 1.2B
     baseCost: new BigNum(220, 18), // 220Qi
     costMultiplier: 1.18,
@@ -376,7 +379,7 @@ export const PASTRIES: Pastry[] = [
     rank: 24,
     level: 0,
     baseBuildTime: 40000,
-    upgrades: [],
+    upgrades: PUDDING_UPGRADES,
     baseRevenue: new BigNum(3, 9), // 3B
     baseCost: new BigNum(14, 21), // 14Sx
     costMultiplier: 1.19,
@@ -391,7 +394,7 @@ export const PASTRIES: Pastry[] = [
     rank: 25,
     level: 0,
     baseBuildTime: 45000,
-    upgrades: [],
+    upgrades: GALETTE_UPGRADES,
     baseRevenue: new BigNum(7.5, 9), // 7.5B
     baseCost: new BigNum(250, 21), // 250Sx
     costMultiplier: 1.19,

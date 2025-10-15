@@ -20,6 +20,14 @@ export class MenuDialogComponent {
   public musicPlaying = this.musicService.musicEnabled;
   public sfxEnabled = this.musicService.sfxEnabled;
   public potentialLifeLessons = this.store.potentialLifeLessons;
+  public globalSellMultiplier = this.store.globalSellMultiplier;
+  public globalSpeedMultiplier = this.store.globalSpeedMultiplier;
+  public criticalChance = this.store.criticalChance;
+  public criticalMultiplier = this.store.criticalMultiplier;
+  public lifeLessons = this.store.lifeLessons;
+  public lifeLessonsMultiplier = computed(() => {
+    return this.store.lifeLessonsMultiplier + this.store.lifeLessonsBoost()
+  });
 
   public toggleMusic(): void {
     this.musicService.toggleMusic();
