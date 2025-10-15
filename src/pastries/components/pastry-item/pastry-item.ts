@@ -6,8 +6,6 @@ import {
   linkedSignal,
   HostListener,
   computed,
-  OnInit,
-  DestroyRef,
 } from '@angular/core';
 import { Pastry } from '@pastries/data/pastry.type';
 import { GameStore } from '@pastries/game.store';
@@ -20,8 +18,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MusicService } from '../../../music/music.service';
 import { Sfx } from '../../../music/sfx.enum';
-import { Subscription } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'pastry-item',
@@ -36,10 +32,9 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     MatButtonModule,
   ],
 })
-export class PastryItemComponent implements OnInit {
+export class PastryItemComponent {
   public musicService = inject(MusicService);
   public store = inject(GameStore);
-  public destroyRef = inject(DestroyRef);
 
   public pastry = input.required<Pastry>();
 
@@ -50,7 +45,6 @@ export class PastryItemComponent implements OnInit {
 
   ctrlDown = signal(false);
   shiftDown = signal(false);
-  critFlashValue = signal<BigNum | null>(null);
 
   @HostListener('window:keydown', ['$event'])
   handleKeyDown(event: KeyboardEvent) {
@@ -88,24 +82,6 @@ export class PastryItemComponent implements OnInit {
     return total;
   });
 
-  private critSubscription: Subscription;
-
-  ngOnInit(): void {
-    if (this.critSubscription) {
-      this.critSubscription.unsubscribe();
-    }
-
-    this.critSubscription = this.store.critEvents$
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: (crit) => {
-          if (crit.pastry.id === this.pastry().id) {
-            this.showCritPopup(crit.value);
-          }
-        },
-      });
-  }
-
   build(source: string = 'base') {
     const progressSignal = this.store.pastryProgress.get(this.pastry().id);
     if (!progressSignal || this.isBuilding()) return;
@@ -126,18 +102,11 @@ export class PastryItemComponent implements OnInit {
         this.isBuilding.set(false);
         progressSignal.set(0);
 
-        let earned = this.store.applyCrit(
-          this.store.getEarnings(this.pastry()),
-          this.pastry(),
-        );
-
-        if(earned.didCrit) {
-          this.musicService.playSfxSound(Sfx.CRIT);
-        } else if (source === 'click') {
+        let earned = this.store.getEarnings(this.pastry());
+        if (source === 'click') {
           this.musicService.playSfxSound(Sfx.BUILD);
         }
-
-        this.store.addMoney(earned.value);
+        this.store.addMoney(earned);
       }
     }, interval);
   }
@@ -164,10 +133,5 @@ export class PastryItemComponent implements OnInit {
 
   levelUpBulk(): void {
     this.store.levelUpBulk(this.pastry().id, this.bulkCount());
-  }
-
-  showCritPopup(value: BigNum): void {
-    this.critFlashValue.set(value);
-    setTimeout(() => this.critFlashValue.set(null), 800);
   }
 }

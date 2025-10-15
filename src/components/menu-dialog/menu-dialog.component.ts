@@ -22,8 +22,6 @@ export class MenuDialogComponent {
   public potentialLifeLessons = this.store.potentialLifeLessons;
   public globalSellMultiplier = this.store.globalSellMultiplier;
   public globalSpeedMultiplier = this.store.globalSpeedMultiplier;
-  public criticalChance = this.store.criticalChance;
-  public criticalMultiplier = this.store.criticalMultiplier;
   public lifeLessons = this.store.lifeLessons;
   public lifeLessonsMultiplier = computed(() => {
     return this.store.lifeLessonsMultiplier + this.store.lifeLessonsBoost()

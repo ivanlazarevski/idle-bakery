@@ -5,9 +5,9 @@ export const FRUIT_CAKE_UPGRADES: PastryUpgrade[] = [
   {
     id: 1801,
     name: "Festive Frenzy",
-    description: "Holiday cheer spreads across the bakery! All pastries sell for 50% more.",
-    type: PastryUpgradeType.GlobalSellMultiplier,
-    value: 1.5,
+    description: "Holiday cheer spreads across the bakery! Sell price increased 100%.",
+    type: PastryUpgradeType.SellMultiplier,
+    value: 2,
     cost: new BigNum(1.5, 13), // ~15T
     purchased: false,
     levelRequirement: 10,
@@ -15,7 +15,7 @@ export const FRUIT_CAKE_UPGRADES: PastryUpgrade[] = [
   {
     id: 1802,
     name: "Sugared Harmony",
-    description: "A balanced sweetness enhances every pastry’s flavor — global sales up another 50%.",
+    description: "A balanced sweetness enhances every pastry’s flavor. global sales up another 50%.",
     type: PastryUpgradeType.GlobalSellMultiplier,
     value: 1.5,
     cost: new BigNum(4.5, 13), // ~45T
@@ -25,9 +25,9 @@ export const FRUIT_CAKE_UPGRADES: PastryUpgrade[] = [
   {
     id: 1803,
     name: "Dried Fruit Boost",
-    description: "Infused energy from sun-dried fruits. +5% Critical Chance Increase!",
-    type: PastryUpgradeType.CriticalChanceIncrease,
-    value: 0.05,
+    description: "Infused energy from sun-dried fruits. +50% global sales!",
+    type: PastryUpgradeType.GlobalSellMultiplier,
+    value: 1.5,
     cost: new BigNum(1.5, 14), // ~150T
     purchased: false,
     levelRequirement: 50,

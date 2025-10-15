@@ -18,8 +18,6 @@ export class PersistenceService {
         globalSpeedMultiplier: store.globalSpeedMultiplier(),
         bonusLifeLessons: store.bonusLifeLessons(),
         lifeLessonsBoost: store.lifeLessonsBoost(),
-        criticalChance: store.criticalChance(),
-        criticalMultiplier: store.criticalMultiplier(),
         pastries: store.pastries().map((p) => ({
           id: p.id,
           level: p.level,
@@ -59,12 +57,6 @@ export class PersistenceService {
       }
       if (parsed?.lifeLessonsBoost != null) {
         store.lifeLessonsBoost.set(parsed.lifeLessonsBoost);
-      }
-      if (parsed?.criticalChance != null) {
-        store.criticalChance.set(parsed.criticalChance);
-      }
-      if (parsed?.criticalMultiplier != null) {
-        store.criticalMultiplier.set(parsed.criticalMultiplier);
       }
 
       // Restore life lessons
@@ -113,9 +105,7 @@ export class PersistenceService {
                   u.type !== PastryUpgradeType.GlobalSellMultiplier &&
                   u.type !== PastryUpgradeType.GlobalSpeedMultiplier &&
                   u.type !== PastryUpgradeType.LifeLessonBonus &&
-                  u.type !== PastryUpgradeType.LifeLessonBoost &&
-                  u.type !== PastryUpgradeType.CriticalChanceIncrease &&
-                  u.type !== PastryUpgradeType.CriticalMultiplierIncrease
+                  u.type !== PastryUpgradeType.LifeLessonBoost
                 ) {
                   merged = store.applyUpgrade(merged, u);
                 }
@@ -142,8 +132,6 @@ export class PersistenceService {
     // Reset global multipliers
     store.globalSellMultiplier.set(store.baseGlobalSellMultiplier);
     store.globalSpeedMultiplier.set(store.baseGlobalSpeedMultiplier);
-    store.criticalChance.set(store.baseCriticalChance);
-    store.criticalMultiplier.set(store.baseCriticalMultiplier);
 
     store.bonusLifeLessons.set(0);
     store.lifeLessonsBoost.set(0);

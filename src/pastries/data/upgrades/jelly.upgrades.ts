@@ -5,7 +5,7 @@ export const JELLY_UPGRADES: PastryUpgrade[] = [
   {
     id: 2301,
     name: 'Sugary Glaze',
-    description: 'Coats the jelly in a glossy sugar shell. Increases Jelly sale price by **+100%**.',
+    description: 'Coats the jelly in a glossy sugar shell. Increases Jelly sale price by +100%.',
     type: PastryUpgradeType.SellMultiplier,
     value: 2,
     cost: new BigNum(2200, 18), // 220 * 10
@@ -15,7 +15,7 @@ export const JELLY_UPGRADES: PastryUpgrade[] = [
   {
     id: 2302,
     name: 'Premium Filling',
-    description: 'Infuses the jelly with high-grade filling. Increases Jelly sale price by **+100%**.',
+    description: 'Infuses the jelly with high-grade filling. Increases Jelly sale price by +100%.',
     type: PastryUpgradeType.SellMultiplier,
     value: 2,
     cost: new BigNum(5500, 18), // 220 * 25
@@ -25,7 +25,7 @@ export const JELLY_UPGRADES: PastryUpgrade[] = [
   {
     id: 2303,
     name: 'Golden Jelly Batch',
-    description: 'A legendary batch with pure sweetness. Increases Jelly sale price by **+100%**.',
+    description: 'A legendary batch with pure sweetness. Increases Jelly sale price by +100%.',
     type: PastryUpgradeType.SellMultiplier,
     value: 2,
     cost: new BigNum(8800, 18), // 220 * 40
@@ -35,9 +35,9 @@ export const JELLY_UPGRADES: PastryUpgrade[] = [
   {
     id: 2304,
     name: 'Sticky Precision',
-    description: 'A perfect jelly mold increases efficiency. **+1% Critical Chance** globally.',
-    type: PastryUpgradeType.CriticalChanceIncrease,
-    value: 0.01,
+    description: 'A perfect jelly mold increases efficiency. Build speed increased by 100%.',
+    type: PastryUpgradeType.SpeedMultiplier,
+    value: 2,
     cost: new BigNum(17600, 18), // 220 * 80
     purchased: false,
     levelRequirement: 75,

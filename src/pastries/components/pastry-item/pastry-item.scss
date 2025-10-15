@@ -139,18 +139,3 @@
   }
 }
 
-#critical {
-  background-color: var(--cRed-dark);
-  font-family: var(--font-critical), serif;
-  color: var(--cLight);
-  width: fit-content;
-  padding: 0.8rem 1.8rem;
-  font-size: 1.6rem;
-  animation: floatUpFade 0.8s ease-out forwards;
-}
-
-
-@keyframes floatUpFade {
-  0% { opacity: 1; transform: translateY(0); }
-  100% { opacity: 0; transform: translateY(-20px); }
-}

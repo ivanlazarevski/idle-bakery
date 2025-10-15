@@ -24,11 +24,6 @@
         [disabled]="isBuilding() || pastry().level === 0"
         class="relative"
       >
-        @if(critFlashValue()){
-        <p id="critical" class="absolute -top-5 -left-2">
-          CRITICAL!
-        </p>
-        }
         {{ isBuilding() ? "Baking..." : "Bake & Sell" }}
       </button>
       @if (!ctrlDown() && !shiftDown() || pastry().level === 0) {

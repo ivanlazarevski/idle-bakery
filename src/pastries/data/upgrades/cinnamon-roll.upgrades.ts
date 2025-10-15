@@ -35,9 +35,9 @@ export const CINNAMON_ROLL_UPGRADES: PastryUpgrade[] = [
   {
     id: 1004,
     name: "Sweet Wisdom",
-    description: "Every roll baked teaches a timeless lesson. +5% Critical chance!",
-    type: PastryUpgradeType.CriticalChanceIncrease,
-    value: 0.05,
+    description: "Every roll baked teaches a timeless lesson. +1 bonus life lesson at retirement.",
+    type: PastryUpgradeType.LifeLessonBonus,
+    value: 1,
     cost: new BigNum(1.2, 9), // 1.2B
     purchased: false,
     levelRequirement: 75,
