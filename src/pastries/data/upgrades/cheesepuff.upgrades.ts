@@ -37,11 +37,11 @@ export const CHEESE_PUFF_UPGRADES: PastryUpgrade[] = [
   },
   {
     id: 604,
-    name: 'Turbo Mixer',
+    name: 'Old Cheese Wisdom',
     description:
-      'An advanced mixer doubles the production speed of Cheese Puffs!',
-    type: PastryUpgradeType.SpeedMultiplier,
-    value: 2,
+      'Wisdom from the past breeds new life into your Cheese Puffs. Gain +1 Life Lesson when you retire.',
+    type: PastryUpgradeType.LifeLessonBonus,
+    value: 1,
     cost: new BigNum(8, 4), // 100k * 80 = 8,000k
     purchased: false,
     levelRequirement: 75,

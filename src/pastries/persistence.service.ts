@@ -112,6 +112,7 @@ export class PersistenceService {
                 if (
                   u.type !== PastryUpgradeType.GlobalSellMultiplier &&
                   u.type !== PastryUpgradeType.GlobalSpeedMultiplier &&
+                  u.type !== PastryUpgradeType.LifeLessonBonus &&
                   u.type !== PastryUpgradeType.LifeLessonBoost &&
                   u.type !== PastryUpgradeType.CriticalChanceIncrease &&
                   u.type !== PastryUpgradeType.CriticalMultiplierIncrease
